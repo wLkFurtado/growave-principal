@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-background text-textDefault font-body antialiased overflow-x-hidden;
+  }
+}
+
+@layer utilities {
+  .noise-overlay {
+    position: absolute; /* changed to absolute or fixed depending on need, fixed is better for full screen */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 50;
+    opacity: 0.05;
+    position: fixed;
+  }
+  
+  .magnetic-hover {
+    @apply transition-transform duration-300 ease-magnetic hover:scale-[1.03];
+  }
+  
+  .glass-card {
+    @apply bg-surface/80 backdrop-blur-xl border border-border shadow-md rounded-2xl;
+  }
+
+  .interactive-btn {
+    @apply relative overflow-hidden transition-all duration-300 ease-magnetic hover:-translate-y-[1px] hover:shadow-glow;
+  }
+  
+  .interactive-btn::before {
+    content: '';
+    @apply absolute inset-0 bg-primary/20 translate-y-full transition-transform duration-300 ease-magnetic z-0;
+  }
+
+  .interactive-btn:hover::before {
+    @apply translate-y-0;
+  }
+  
+  .interactive-btn-content {
+    @apply relative z-10;
+  }
+}
