@@ -42,7 +42,7 @@ const Stats = () => {
         </div>
 
         <div className="stat-item flex flex-col justify-center border-l-0 md:border-l border-border md:pl-12">
-          <span className="font-heading text-7xl md:text-8xl text-white">4 <span className="text-4xl">Anos</span></span>
+          <span className="font-heading text-7xl md:text-8xl text-white">6 <span className="text-4xl">Anos</span></span>
           <h3 className="font-heading text-xl text-primary tracking-wide uppercase mt-2">De Experiência</h3>
           <p className="text-textMuted font-body text-sm mt-1">Tração real, engenharia de vendas e marketing de resultados.</p>
         </div>

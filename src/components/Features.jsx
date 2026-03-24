@@ -127,8 +127,8 @@ const CursorScheduler = () => {
   return (
     <div ref={containerRef} className="h-64 w-full relative pt-4 px-4 flex flex-col items-center">
       <div className="w-full flex justify-between items-center mb-4">
-         <Video size={16} className="text-primary"/>
-         <span className="text-xs font-mono text-textMuted uppercase">Produção de Vídeo</span>
+         <MousePointer2 size={16} className="text-primary"/>
+         <span className="text-xs font-mono text-textMuted uppercase">CRM / Agendamento</span>
       </div>
       <div className="grid grid-cols-7 gap-1 w-full max-w-[240px] mb-4">
         {['D','S','T','Q','Q','S','S'].map((day, i) => (
@@ -139,7 +139,7 @@ const CursorScheduler = () => {
         ))}
       </div>
       <div className="w-full max-w-[240px] flex justify-end">
-        <div className="save-btn font-mono text-xs border border-border px-4 py-1 rounded transition-colors">Agendar Gravação</div>
+        <div className="save-btn font-mono text-xs border border-border px-4 py-1 rounded transition-colors">Agendar Lead</div>
       </div>
       <div className="cursor-icon absolute top-8 left-12 text-primary z-20" style={{ filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.5))' }}>
         <MousePointer2 size={24} fill="white" stroke="black" strokeWidth={1.5} />
@@ -209,9 +209,9 @@ const Features = () => {
         </div>
         <div className="glass-card flex flex-col p-8 group">
           <div className="mb-6"><CursorScheduler /></div>
-          <h4 className="text-3xl font-heading tracking-wide mb-3">Conteúdo que Converte</h4>
+          <h4 className="text-3xl font-heading tracking-wide mb-3">Agendamento Inteligente de Leads</h4>
           <p className="text-textMuted font-body text-sm leading-relaxed">
-            Unimos design estético e produções audiovisuais cinematográficas com retenção psicológica estruturada para impulsionar suas campanhas online.
+            Nosso CRM agenda leads de forma automática ou manual — tudo definido de acordo com a estratégia comercial do seu negócio. Cada contato no momento certo, sem deixar oportunidade escapar.
           </p>
         </div>
       </div>
