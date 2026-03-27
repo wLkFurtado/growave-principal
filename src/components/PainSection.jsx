@@ -1,11 +1,12 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { X, Check } from 'lucide-react';
+import { X } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const PainSection = () => {
+/* eslint-disable react/prop-types */
+const PainSection = ({ openModal }) => {
   const ref = useRef(null);
 
   useLayoutEffect(() => {
@@ -66,7 +67,7 @@ const PainSection = () => {
             Se você não seguí-lo, você tende a continuar patinando enquanto concorrentes menos qualificados avançam.
           </p>
         </div>
-        <button className="interactive-btn shrink-0 bg-primary text-background font-body font-bold px-8 py-4 rounded-full text-base shadow-glow-strong group">
+        <button onClick={openModal} className="interactive-btn shrink-0 bg-primary text-background font-body font-bold px-8 py-4 rounded-full text-base shadow-glow-strong group">
           <span className="interactive-btn-content flex items-center gap-2">
             Quero o Diagnóstico
             <span className="transition-transform group-hover:translate-x-1">→</span>

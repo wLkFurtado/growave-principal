@@ -1,4 +1,5 @@
-const Pricing = () => {
+/* eslint-disable react/prop-types */
+const Pricing = ({ openModal }) => {
   return (
     <section id="pricing" className="py-32 px-4 md:px-16 container mx-auto">
       <div className="max-w-4xl mx-auto pt-16">
@@ -28,7 +29,7 @@ const Pricing = () => {
             <strong className="text-primary font-bold">Ofereço um encontro inicial sem custos.</strong> Aqui, exploraremos suas metas e <strong className="text-primary font-bold">como podemos ajudar a alcançá-las.</strong>
           </p>
 
-          <button className="interactive-btn w-full md:w-auto py-5 px-12 rounded-full font-bold font-heading text-xl transition-all bg-primary text-background group hover:bg-white">
+          <button onClick={openModal} className="interactive-btn w-full md:w-auto py-5 px-12 rounded-full font-bold font-heading text-xl transition-all bg-primary text-background group hover:bg-white">
             <span className="interactive-btn-content flex items-center justify-center gap-2 tracking-wide uppercase">
               Agendar Reunião de Diagnóstico
               <span className="transition-transform group-hover:translate-x-2">→</span>

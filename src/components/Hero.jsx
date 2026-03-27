@@ -1,7 +1,8 @@
 import { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 
-const Hero = () => {
+/* eslint-disable react/prop-types */
+const Hero = ({ openModal }) => {
   const container = useRef(null);
 
   useLayoutEffect(() => {
@@ -62,7 +63,7 @@ const Hero = () => {
         </p>
 
         <div className="hero-elem mt-8">
-          <button className="interactive-btn group bg-primary text-background font-body font-bold px-10 py-5 rounded-full text-lg shadow-glow-strong">
+          <button onClick={openModal} className="interactive-btn group bg-primary text-background font-body font-bold px-10 py-5 rounded-full text-lg shadow-glow-strong">
             <span className="interactive-btn-content flex items-center gap-3">
               Agendar Consultoria Gratuita
               <span className="block transition-transform duration-300 group-hover:translate-x-2">→</span>

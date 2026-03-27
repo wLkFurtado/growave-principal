@@ -4,7 +4,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Navbar = () => {
+/* eslint-disable react/prop-types */
+const Navbar = ({ openModal }) => {
   const wrapperRef = useRef(null);
   const innerNavRef = useRef(null);
 
@@ -58,7 +59,7 @@ const Navbar = () => {
           <a href="#protocol" className="text-textDefault transition-colors hover:text-primary">Estratégia</a>
         </div>
 
-        <button className="interactive-btn bg-primary text-background font-body font-bold text-sm px-6 py-3 rounded-full hover:shadow-glow">
+        <button onClick={openModal} className="interactive-btn bg-primary text-background font-body font-bold text-sm px-6 py-3 rounded-full hover:shadow-glow">
           <span className="interactive-btn-content">Agendar Consultoria</span>
         </button>
       </nav>
