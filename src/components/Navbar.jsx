@@ -2,8 +2,6 @@ import { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
-
 /* eslint-disable react/prop-types */
 const Navbar = ({ openModal }) => {
   const wrapperRef = useRef(null);

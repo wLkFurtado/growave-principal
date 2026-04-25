@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+
 const Philosophy = () => {
   const containerRef = useRef(null);
 
@@ -45,7 +46,7 @@ const Philosophy = () => {
             [ O padrão genérico ]
           </p>
           <p className="font-body text-xl md:text-2xl text-textDefault/70">
-            A maioria das agências vende <span className="underline decoration-border underline-offset-4">seguidores, alcance e "presença digital"</span> — e manda relatório de vaidade no fim do mês.
+            A maioria das agências vende <span className="underline decoration-border underline-offset-4">seguidores, alcance e &ldquo;presença digital&rdquo;</span> — e manda relatório de vaidade no fim do mês.
           </p>
           <p className="font-heading italic text-5xl md:text-7xl lg:text-[6rem] mt-6 text-primary leading-none tracking-wide uppercase">
             Nós entregamos <br/> Receita.
