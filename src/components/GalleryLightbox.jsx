@@ -28,12 +28,23 @@ export default function GalleryLightbox({ images, currentIndex, onClose, onNext,
   if (currentIndex === null || !images || images.length === 0) return null;
 
   const currentImage = images[currentIndex];
-  // URL para imagem original otimizada
-  const imageUrl = `https://res.cloudinary.com/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload/q_auto,f_auto/v${currentImage.version}/${currentImage.public_id}.${currentImage.format}`;
+  
+  // URL para imagem exibida na tela (tamanho limitado a 1920px para carregar super rápido, qualidade 80)
+  const displayUrl = `https://res.cloudinary.com/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload/c_limit,w_1920,q_80,f_auto/v${currentImage.version}/${currentImage.public_id}.${currentImage.format}`;
+  
+  // URL original para download em alta resolução
+  const downloadUrl = `https://res.cloudinary.com/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload/q_auto,f_auto/v${currentImage.version}/${currentImage.public_id}.${currentImage.format}`;
+
+  // Preparar URLs para pré-carregamento (imagem anterior e próxima)
+  const prevImgData = currentIndex > 0 ? images[currentIndex - 1] : null;
+  const nextImgData = currentIndex < images.length - 1 ? images[currentIndex + 1] : null;
+  
+  const preloadPrevUrl = prevImgData ? `https://res.cloudinary.com/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload/c_limit,w_1920,q_80,f_auto/v${prevImgData.version}/${prevImgData.public_id}.${prevImgData.format}` : null;
+  const preloadNextUrl = nextImgData ? `https://res.cloudinary.com/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload/c_limit,w_1920,q_80,f_auto/v${nextImgData.version}/${nextImgData.public_id}.${nextImgData.format}` : null;
 
   const handleDownload = async () => {
     try {
-      const response = await fetch(imageUrl);
+      const response = await fetch(downloadUrl);
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
@@ -46,12 +57,16 @@ export default function GalleryLightbox({ images, currentIndex, onClose, onNext,
     } catch (error) {
       console.error('Erro ao fazer download', error);
       // Fallback
-      window.open(imageUrl, '_blank');
+      window.open(downloadUrl, '_blank');
     }
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm">
+      {/* Imagens ocultas para pré-carregamento nativo do navegador */}
+      {preloadPrevUrl && <link rel="preload" as="image" href={preloadPrevUrl} />}
+      {preloadNextUrl && <link rel="preload" as="image" href={preloadNextUrl} />}
+      
       {/* Controles do Topo */}
       <div className="absolute top-0 left-0 right-0 p-4 flex justify-between items-center z-10">
         <span className="text-white/70 font-mono text-sm">
@@ -61,7 +76,7 @@ export default function GalleryLightbox({ images, currentIndex, onClose, onNext,
           <button 
             onClick={handleDownload}
             className="text-white/70 hover:text-white transition-colors p-2 bg-white/10 rounded-full hover:bg-white/20"
-            title="Baixar foto"
+            title="Baixar foto em alta resolução"
           >
             <Download size={24} />
           </button>
@@ -86,9 +101,10 @@ export default function GalleryLightbox({ images, currentIndex, onClose, onNext,
       {/* Imagem */}
       <div className="relative w-full h-full flex items-center justify-center p-4 md:p-12" onClick={onClose}>
         <img 
-          src={imageUrl} 
+          key={currentImage.public_id} // Força recarregar a tag img se mudar, ótimo para animações futuras e evita bugs de src antigo
+          src={displayUrl} 
           alt="Foto da Galeria" 
-          className="max-w-full max-h-full object-contain select-none"
+          className="max-w-full max-h-full object-contain select-none shadow-2xl"
           onClick={(e) => e.stopPropagation()} // Previne fechar ao clicar na imagem
         />
       </div>
