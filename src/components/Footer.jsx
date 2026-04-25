@@ -27,8 +27,8 @@ const Footer = () => {
 
         <div className="flex flex-col gap-4">
           <h4 className="font-heading font-bold text-lg mb-2">Contato</h4>
-          <a href="#" className="text-sm text-textMuted hover:text-primary transition-colors">contato@growave.com.br</a>
-          <a href="#" className="text-sm text-textMuted hover:text-primary transition-colors">+55 11 99999-9999</a>
+          <a href="mailto:contato@growave.com.br" className="text-sm text-textMuted hover:text-primary transition-colors">contato@growave.com.br</a>
+          <a href="https://wa.me/5522981611733" target="_blank" rel="noopener noreferrer" className="text-sm text-textMuted hover:text-primary transition-colors">+55 22 98161-1733</a>
           <div className="mt-4 flex gap-4">
             <a href="#" className="w-10 h-10 rounded-full border border-border flex items-center justify-center hover:border-primary transition-colors">in</a>
             <a href="#" className="w-10 h-10 rounded-full border border-border flex items-center justify-center hover:border-primary transition-colors">ig</a>
