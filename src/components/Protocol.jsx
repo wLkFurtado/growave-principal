@@ -73,17 +73,40 @@ export default function Protocol() {
 
   if (isMobile) {
     return (
-      <section id="estratégia" style={{ padding: '72px 20px', background: '#050505' }}>
-        <div style={{ marginBottom: 40 }}>
+      <section id="estratégia" style={{ padding: '72px 0', background: '#050505' }}>
+        <div style={{ padding: '0 20px', marginBottom: 32 }}>
           <div style={{ fontFamily: 'JetBrains Mono', fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#4AFF5A', marginBottom: 12 }}>/ O Método</div>
           <h2 style={{ fontFamily: 'Bebas Neue', fontSize: 40, letterSpacing: '0.04em', textTransform: 'uppercase', color: '#EAEAEA', lineHeight: 1 }}>Como Funciona</h2>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+
+        {/* Dots */}
+        <div style={{ display: 'flex', gap: 10, padding: '0 20px', marginBottom: 20 }}>
+          {steps.map((s, i) => (
+            <div key={i} style={{ height: 6, borderRadius: 9999, background: i === activeStep ? '#4AFF5A' : '#2a2a2a', transition: 'all 400ms', width: i === activeStep ? 24 : 6 }} />
+          ))}
+        </div>
+
+        {/* Horizontal snap scroll */}
+        <div
+          onScroll={e => {
+            const idx = Math.round(e.currentTarget.scrollLeft / (e.currentTarget.offsetWidth - 40));
+            setActiveStep(Math.min(steps.length - 1, Math.max(0, idx)));
+          }}
+          style={{
+            display: 'flex', overflowX: 'scroll', gap: 16,
+            scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch',
+            scrollbarWidth: 'none', msOverflowStyle: 'none',
+            padding: '4px 20px 24px',
+          }}
+        >
           {steps.map((step, idx) => (
             <div key={idx} style={{
+              flexShrink: 0, width: 'calc(100vw - 56px)',
+              scrollSnapAlign: 'start',
               border: `1px solid ${idx === activeStep ? 'rgba(74,255,90,0.35)' : 'rgba(34,34,34,0.8)'}`,
-              borderRadius: 28, background: 'rgba(17,17,17,0.70)', overflow: 'hidden', cursor: 'pointer',
-            }} onClick={() => setActiveStep(idx)}>
+              borderRadius: 28, background: 'rgba(17,17,17,0.70)', overflow: 'hidden',
+              transition: 'border-color 400ms',
+            }}>
               <div style={{ padding: '28px 24px 20px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
                   <span style={{ fontFamily: 'JetBrains Mono', fontSize: 15, color: '#4AFF5A' }}>[{step.id}]</span>
@@ -92,12 +115,18 @@ export default function Protocol() {
                 <h3 style={{ fontFamily: 'Bebas Neue', fontSize: 28, letterSpacing: '0.04em', textTransform: 'uppercase', color: '#EAEAEA', lineHeight: 1.1, marginBottom: 10 }}>{step.title}</h3>
                 <p style={{ fontFamily: 'Inter', fontSize: 14, color: '#A1A1AA', lineHeight: 1.7 }}>{step.desc}</p>
               </div>
-              <div style={{ height: 120, background: 'rgba(5,5,5,0.8)', borderTop: '1px solid rgba(34,34,34,0.6)', position: 'relative', overflow: 'hidden' }}>
+              <div style={{ height: 130, background: 'rgba(5,5,5,0.8)', borderTop: '1px solid rgba(34,34,34,0.6)', position: 'relative', overflow: 'hidden' }}>
                 {graphics[idx]}
                 <div style={{ position: 'absolute', bottom: 4, right: 12, fontFamily: 'Bebas Neue', fontSize: 72, lineHeight: 1, color: 'rgba(74,255,90,0.04)', userSelect: 'none' }}>{step.id}</div>
               </div>
             </div>
           ))}
+          {/* Trailing spacer so last card snaps correctly */}
+          <div style={{ flexShrink: 0, width: 4 }} />
+        </div>
+
+        <div className="bounce" style={{ textAlign: 'center', opacity: 0.35 }}>
+          <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#A1A1AA' }}>Deslize para avançar →</span>
         </div>
       </section>
     );
