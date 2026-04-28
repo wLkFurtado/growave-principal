@@ -40,13 +40,14 @@ const GraphicSparkline = () => (
 const graphics = [<GraphicCircle />, <GraphicBar />, <GraphicSparkline />];
 
 export default function Protocol() {
-  const sectionRef = useRef(null);
-  const trackRef = useRef(null);
+  const outerRef = useRef(null);   // tall scroll container
+  const stickyRef = useRef(null);  // position: sticky viewport
+  const trackRef = useRef(null);   // slides horizontally
   const isMobile = useIsMobile();
   const [activeStep, setActiveStep] = useState(0);
 
   useEffect(() => {
-    const section = sectionRef.current;
+    const outer = outerRef.current;
     const track = trackRef.current;
 
     const getScrollAmt = () => -(track.scrollWidth - window.innerWidth);
@@ -55,12 +56,10 @@ export default function Protocol() {
       x: getScrollAmt,
       ease: 'none',
       scrollTrigger: {
-        trigger: section,
+        trigger: outer,
         start: 'top top',
-        end: () => `+=${Math.abs(getScrollAmt()) + window.innerWidth * 0.5}`,
-        pin: true,
-        pinType: 'transform',
-        scrub: 0.3,
+        end: 'bottom bottom',
+        scrub: true,           // scrub:true = 1:1 with scroll, no lag
         invalidateOnRefresh: true,
         onUpdate: self => {
           setActiveStep(Math.min(steps.length - 1, Math.floor(self.progress * steps.length)));
@@ -75,88 +74,86 @@ export default function Protocol() {
   }, []);
 
   const cardWidth = isMobile ? 'min(88vw, 380px)' : 'min(85vw, 760px)';
-  const cardPad = isMobile ? '28px 20px' : '48px 56px';
-  const titleSize = isMobile ? 'clamp(22px, 5vw, 32px)' : 'clamp(28px,3.5vw,48px)';
-  const descSize = isMobile ? 13 : 15;
-  const graphicHeight = isMobile ? 140 : '100%';
+  const cardPad   = isMobile ? '28px 20px' : '48px 56px';
+  const titleSize = isMobile ? 'clamp(22px,5vw,32px)' : 'clamp(28px,3.5vw,48px)';
 
   return (
-    <section id="estratégia" ref={sectionRef} style={{
-      position: 'relative', height: '100svh', overflow: 'hidden', background: '#050505',
-    }}>
-      {/* Header */}
-      <div style={{
-        position: 'absolute', top: 0, left: 0, right: 0, zIndex: 20,
-        padding: isMobile ? '28px 20px 16px' : '40px 64px 24px',
-        display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between',
-        pointerEvents: 'none',
+    /* Outer: tall enough to scroll through all cards */
+    <div id="estratégia" ref={outerRef} style={{ height: `${steps.length * 100}vh`, background: '#050505' }}>
+
+      {/* Sticky: stays in viewport while outer scrolls */}
+      <div ref={stickyRef} style={{
+        position: 'sticky', top: 0, height: '100vh', overflow: 'hidden',
       }}>
-        <div>
-          <div style={{ fontFamily: 'JetBrains Mono', fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#4AFF5A', marginBottom: 8 }}>/ O Método</div>
-          <h2 style={{ fontFamily: 'Bebas Neue', fontSize: isMobile ? 36 : 'clamp(36px,5vw,60px)', letterSpacing: '0.04em', textTransform: 'uppercase', color: '#EAEAEA', lineHeight: 1 }}>Como Funciona</h2>
+
+        {/* Header */}
+        <div style={{
+          position: 'absolute', top: 0, left: 0, right: 0, zIndex: 20,
+          padding: isMobile ? '28px 20px 16px' : '40px 64px 24px',
+          display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between',
+          pointerEvents: 'none',
+        }}>
+          <div>
+            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#4AFF5A', marginBottom: 8 }}>/ O Método</div>
+            <h2 style={{ fontFamily: 'Bebas Neue', fontSize: isMobile ? 36 : 'clamp(36px,5vw,60px)', letterSpacing: '0.04em', textTransform: 'uppercase', color: '#EAEAEA', lineHeight: 1 }}>Como Funciona</h2>
+          </div>
+          <div style={{ display: 'flex', gap: 10, pointerEvents: 'auto', alignItems: 'center' }}>
+            {steps.map((s, i) => (
+              <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+                <span style={{ fontFamily: 'JetBrains Mono', fontSize: 10, color: i === activeStep ? '#4AFF5A' : '#444', transition: 'color 400ms' }}>{s.id}</span>
+                <div style={{ height: 6, borderRadius: 9999, background: i === activeStep ? '#4AFF5A' : '#2a2a2a', transition: 'all 500ms', width: i === activeStep ? 24 : 6 }} />
+              </div>
+            ))}
+          </div>
         </div>
-        {/* Progress dots */}
-        <div style={{ display: 'flex', gap: 10, pointerEvents: 'auto', alignItems: 'center' }}>
-          {steps.map((s, i) => (
-            <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-              <span style={{ fontFamily: 'JetBrains Mono', fontSize: 10, letterSpacing: '0.15em', color: i === activeStep ? '#4AFF5A' : '#444', transition: 'color 400ms' }}>{s.id}</span>
-              <div style={{ height: 6, borderRadius: 9999, background: i === activeStep ? '#4AFF5A' : '#2a2a2a', transition: 'all 500ms', width: i === activeStep ? 24 : 6 }} />
+
+        {/* Scroll hint */}
+        <div style={{ position: 'absolute', bottom: 20, left: '50%', transform: 'translateX(-50%)', zIndex: 20, opacity: 0.4, pointerEvents: 'none', display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontFamily: 'JetBrains Mono', fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#A1A1AA', whiteSpace: 'nowrap' }}>Role para avançar</span>
+          <svg width="28" height="12" viewBox="0 0 28 12" fill="none">
+            <path d="M0 6h24M19 1l6 5-6 5" stroke="#a1a1aa" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </div>
+
+        {/* Horizontal track */}
+        <div ref={trackRef} style={{
+          position: 'absolute', top: 0, left: 0, height: '100%',
+          display: 'flex', alignItems: 'center',
+          paddingTop: isMobile ? 100 : 120,
+          paddingBottom: isMobile ? 48 : 60,
+          willChange: 'transform',
+        }}>
+          <div style={{ flexShrink: 0, width: isMobile ? '5vw' : '10vw' }} />
+          {steps.map((step, idx) => (
+            <div key={idx} style={{ flexShrink: 0, marginRight: isMobile ? 16 : 24, width: cardWidth }}>
+              <div style={{
+                height: '100%', minHeight: isMobile ? 360 : 420,
+                border: `1px solid ${idx === activeStep ? 'rgba(74,255,90,0.35)' : 'rgba(34,34,34,0.8)'}`,
+                borderRadius: isMobile ? 28 : 40,
+                background: 'rgba(17,17,17,0.70)', overflow: 'hidden',
+                display: 'flex', flexDirection: isMobile ? 'column' : 'row',
+                boxShadow: idx === activeStep ? '0 0 40px rgba(74,255,90,0.08)' : 'none',
+                transition: 'border-color 700ms, box-shadow 700ms',
+              }}>
+                <div style={{ flex: isMobile ? 'unset' : '0 0 55%', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: cardPad, gap: 16 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <span style={{ fontFamily: 'JetBrains Mono', fontSize: isMobile ? 14 : 18, color: '#4AFF5A' }}>[{step.id}]</span>
+                    <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, background: 'rgba(74,255,90,0.10)', border: '1px solid rgba(74,255,90,0.30)', color: '#4AFF5A', padding: '3px 10px', borderRadius: 9999, letterSpacing: '0.12em', textTransform: 'uppercase' }}>{step.tag}</span>
+                  </div>
+                  <h3 style={{ fontFamily: 'Bebas Neue', fontSize: titleSize, letterSpacing: '0.04em', textTransform: 'uppercase', color: '#EAEAEA', lineHeight: 1.1 }}>{step.title}</h3>
+                  <p style={{ fontFamily: 'Inter', fontSize: isMobile ? 13 : 15, color: '#A1A1AA', lineHeight: 1.75 }}>{step.desc}</p>
+                </div>
+                <div style={{ flex: isMobile ? 'unset' : '0 0 45%', height: isMobile ? 140 : 'auto', position: 'relative', background: 'rgba(5,5,5,0.8)', borderTop: isMobile ? '1px solid rgba(34,34,34,0.6)' : 'none', borderLeft: isMobile ? 'none' : '1px solid rgba(34,34,34,0.6)', overflow: 'hidden' }}>
+                  <div style={{ position: 'absolute', inset: 0 }}>{graphics[idx]}</div>
+                  <div style={{ position: 'absolute', bottom: 8, right: 16, fontFamily: 'Bebas Neue', fontSize: isMobile ? 64 : 'clamp(80px,10vw,120px)', lineHeight: 1, color: 'rgba(74,255,90,0.04)', userSelect: 'none', pointerEvents: 'none' }}>{step.id}</div>
+                </div>
+              </div>
             </div>
           ))}
+          <div style={{ flexShrink: 0, width: isMobile ? '5vw' : '10vw' }} />
         </div>
-      </div>
 
-      {/* Scroll hint */}
-      <div style={{ position: 'absolute', bottom: 20, left: '50%', transform: 'translateX(-50%)', zIndex: 20, display: 'flex', alignItems: 'center', gap: 8, opacity: 0.4, pointerEvents: 'none' }}>
-        <span style={{ fontFamily: 'JetBrains Mono', fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase', color: '#A1A1AA', whiteSpace: 'nowrap' }}>
-          {isMobile ? 'Role para avançar' : 'Role para avançar'}
-        </span>
-        <svg width="28" height="12" viewBox="0 0 28 12" fill="none">
-          <path d="M0 6h24M19 1l6 5-6 5" stroke="#a1a1aa" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
       </div>
-
-      {/* Horizontal track */}
-      <div ref={trackRef} style={{
-        position: 'absolute', top: 0, left: 0, height: '100%',
-        display: 'flex', alignItems: 'center',
-        paddingTop: isMobile ? 100 : 120,
-        paddingBottom: isMobile ? 48 : 60,
-        willChange: 'transform',
-        transform: 'translateZ(0)',
-      }}>
-        <div style={{ flexShrink: 0, width: isMobile ? '5vw' : '10vw' }} />
-        {steps.map((step, idx) => (
-          <div key={idx} style={{ flexShrink: 0, marginRight: isMobile ? 16 : 24, width: cardWidth }}>
-            <div style={{
-              height: '100%',
-              minHeight: isMobile ? 360 : 420,
-              border: `1px solid ${idx === activeStep ? 'rgba(74,255,90,0.35)' : 'rgba(34,34,34,0.8)'}`,
-              borderRadius: isMobile ? 28 : 40,
-              background: 'rgba(17,17,17,0.70)', overflow: 'hidden',
-              display: 'flex', flexDirection: isMobile ? 'column' : 'row',
-              boxShadow: idx === activeStep ? '0 0 40px rgba(74,255,90,0.08)' : 'none',
-              transition: 'border-color 700ms, box-shadow 700ms',
-            }}>
-              {/* Text */}
-              <div style={{ flex: isMobile ? 'unset' : '0 0 55%', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: cardPad, gap: 16 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <span style={{ fontFamily: 'JetBrains Mono', fontSize: isMobile ? 14 : 18, color: '#4AFF5A' }}>[{step.id}]</span>
-                  <span style={{ fontFamily: 'JetBrains Mono', fontSize: 9, background: 'rgba(74,255,90,0.10)', border: '1px solid rgba(74,255,90,0.30)', color: '#4AFF5A', padding: '3px 10px', borderRadius: 9999, letterSpacing: '0.12em', textTransform: 'uppercase' }}>{step.tag}</span>
-                </div>
-                <h3 style={{ fontFamily: 'Bebas Neue', fontSize: titleSize, letterSpacing: '0.04em', textTransform: 'uppercase', color: '#EAEAEA', lineHeight: 1.1 }}>{step.title}</h3>
-                <p style={{ fontFamily: 'Inter', fontSize: descSize, color: '#A1A1AA', lineHeight: 1.75 }}>{step.desc}</p>
-              </div>
-              {/* Graphic */}
-              <div style={{ flex: isMobile ? 'unset' : '0 0 45%', height: isMobile ? graphicHeight : 'auto', position: 'relative', background: 'rgba(5,5,5,0.8)', borderTop: isMobile ? '1px solid rgba(34,34,34,0.6)' : 'none', borderLeft: isMobile ? 'none' : '1px solid rgba(34,34,34,0.6)', overflow: 'hidden' }}>
-                <div style={{ position: 'absolute', inset: 0 }}>{graphics[idx]}</div>
-                <div style={{ position: 'absolute', bottom: 8, right: 16, fontFamily: 'Bebas Neue', fontSize: isMobile ? 64 : 'clamp(80px,10vw,120px)', lineHeight: 1, color: 'rgba(74,255,90,0.04)', userSelect: 'none', pointerEvents: 'none' }}>{step.id}</div>
-              </div>
-            </div>
-          </div>
-        ))}
-        <div style={{ flexShrink: 0, width: isMobile ? '5vw' : '10vw' }} />
-      </div>
-    </section>
+    </div>
   );
 }
