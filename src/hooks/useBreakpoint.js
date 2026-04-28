@@ -1,11 +1,16 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+function getWidth() {
+  return typeof window !== 'undefined' ? window.innerWidth : 1200;
+}
+
 export function useIsMobile(bp = 768) {
-  const [mobile, setMobile] = useState(window.innerWidth < bp);
-  useEffect(() => {
-    const fn = () => setMobile(window.innerWidth < bp);
+  const [mobile, setMobile] = useState(() => getWidth() < bp);
+  useLayoutEffect(() => {
+    const fn = () => setMobile(getWidth() < bp);
+    fn();
     window.addEventListener('resize', fn);
     return () => window.removeEventListener('resize', fn);
   }, [bp]);
@@ -13,9 +18,10 @@ export function useIsMobile(bp = 768) {
 }
 
 export function useIsTablet(bp = 1024) {
-  const [tablet, setTablet] = useState(window.innerWidth < bp);
-  useEffect(() => {
-    const fn = () => setTablet(window.innerWidth < bp);
+  const [tablet, setTablet] = useState(() => getWidth() < bp);
+  useLayoutEffect(() => {
+    const fn = () => setTablet(getWidth() < bp);
+    fn();
     window.addEventListener('resize', fn);
     return () => window.removeEventListener('resize', fn);
   }, [bp]);
