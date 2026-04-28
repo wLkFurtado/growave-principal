@@ -59,9 +59,8 @@ export default function Protocol() {
         start: 'top top',
         end: () => `+=${Math.abs(getScrollAmt()) + window.innerWidth * 0.5}`,
         pin: true,
-        pinType: 'transform',   // iOS/mobile safe
-        anticipatePin: 1,
-        scrub: 1,
+        pinType: 'transform',
+        scrub: 0.3,
         invalidateOnRefresh: true,
         onUpdate: self => {
           setActiveStep(Math.min(steps.length - 1, Math.floor(self.progress * steps.length)));
@@ -83,7 +82,7 @@ export default function Protocol() {
 
   return (
     <section id="estratégia" ref={sectionRef} style={{
-      position: 'relative', height: '100vh', overflow: 'hidden', background: '#050505',
+      position: 'relative', height: '100svh', overflow: 'hidden', background: '#050505',
     }}>
       {/* Header */}
       <div style={{
@@ -124,6 +123,7 @@ export default function Protocol() {
         paddingTop: isMobile ? 100 : 120,
         paddingBottom: isMobile ? 48 : 60,
         willChange: 'transform',
+        transform: 'translateZ(0)',
       }}>
         <div style={{ flexShrink: 0, width: isMobile ? '5vw' : '10vw' }} />
         {steps.map((step, idx) => (
