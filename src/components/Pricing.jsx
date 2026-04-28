@@ -1,44 +1,48 @@
-/* eslint-disable react/prop-types */
-const Pricing = ({ openModal }) => {
+import { useIsMobile } from '../hooks/useBreakpoint';
+
+export default function Pricing({ openModal }) {
+  const isMobile = useIsMobile();
   return (
-    <section id="pricing" className="py-32 px-4 md:px-16 container mx-auto">
-      <div className="max-w-4xl mx-auto pt-16">
-        <div className="flex flex-col items-center text-center rounded-3xl p-8 md:p-16 relative overflow-hidden bg-surface border border-primary/20 shadow-2xl scale-100 z-10 w-full transition-transform duration-500 hover:scale-[1.01] hover:border-primary/50 hover:shadow-glow">
-          
-          <div className="absolute top-0 right-8 bg-primary/10 text-primary border border-primary/30 font-bold font-mono text-xs px-4 py-1 rounded-b-lg top-0 z-20 uppercase tracking-widest">
-            Exclusivo
-          </div>
-          
-          <h2 className="text-6xl md:text-7xl font-heading text-primary tracking-wider uppercase mb-8 mt-4 drop-shadow-[0_0_15px_rgba(0,255,157,0.3)]">
-            Investimento
-          </h2>
-          
-          <p className="text-xl md:text-2xl text-textDefault/90 font-body max-w-3xl leading-relaxed mb-16">
-            Entendemos que <strong className="text-primary font-bold">cada negócio é único.</strong> É por isso que não temos uma tabela fixa de preços. Quero garantir que você <strong className="text-primary font-bold">pague pelo que realmente precisa</strong>, sem surpresas ou custos extras.
-          </p>
-          
-          <h3 className="text-3xl md:text-5xl font-heading text-primary tracking-wide uppercase mb-6 drop-shadow-[0_0_10px_rgba(0,255,157,0.2)]">
-            Mas, calma! Te darei uma consultoria gratuita
-          </h3>
-          
-          <p className="text-lg md:text-xl text-textMuted font-body max-w-3xl leading-relaxed mb-6">
-            Antes de falarmos de números, <strong className="text-primary font-bold">quero conhecer a fundo a sua empresa.</strong> Isso me permite criar uma estratégia sob medida para você.
-          </p>
+    <section style={{ padding: isMobile ? '60px 20px 80px' : '80px 40px 100px', maxWidth: 900, margin: '0 auto' }}>
+      <div style={{
+        background: '#111', border: '1px solid rgba(74,255,90,0.20)', borderRadius: isMobile ? 28 : 40,
+        padding: isMobile ? '48px 28px' : '72px 64px', textAlign: 'center', position: 'relative', overflow: 'hidden',
+        transition: 'transform 300ms, box-shadow 300ms, border-color 300ms',
+      }}
+        onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.01)'; e.currentTarget.style.borderColor = 'rgba(74,255,90,0.50)'; e.currentTarget.style.boxShadow = '0 0 40px rgba(74,255,90,0.12)'; }}
+        onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.borderColor = 'rgba(74,255,90,0.20)'; e.currentTarget.style.boxShadow = 'none'; }}
+      >
+        <div style={{
+          position: 'absolute', top: 0, right: 32,
+          background: 'rgba(74,255,90,0.10)', border: '1px solid rgba(74,255,90,0.30)',
+          color: '#4AFF5A', padding: '4px 14px', borderRadius: '0 0 12px 12px',
+          fontFamily: 'JetBrains Mono', fontSize: 9, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase',
+        }}>Exclusivo</div>
 
-          <p className="text-lg md:text-xl text-textMuted font-body max-w-3xl leading-relaxed mb-12">
-            <strong className="text-primary font-bold">Ofereço um encontro inicial sem custos.</strong> Aqui, exploraremos suas metas e <strong className="text-primary font-bold">como podemos ajudar a alcançá-las.</strong>
-          </p>
+        <h2 style={{ fontFamily: 'Bebas Neue', fontSize: 72, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#4AFF5A', marginBottom: 28, filter: 'drop-shadow(0 0 15px rgba(74,255,90,0.25))' }}>Investimento</h2>
 
-          <button onClick={openModal} className="interactive-btn w-full md:w-auto py-5 px-12 rounded-full font-bold font-heading text-xl transition-all bg-primary text-background group hover:bg-white">
-            <span className="interactive-btn-content flex items-center justify-center gap-2 tracking-wide uppercase">
-              Agendar Reunião de Diagnóstico
-              <span className="transition-transform group-hover:translate-x-2">→</span>
-            </span>
-          </button>
-        </div>
+        <p style={{ fontFamily: 'Inter', fontSize: 18, color: 'rgba(234,234,234,0.9)', lineHeight: 1.7, maxWidth: 600, margin: '0 auto 48px' }}>
+          Entendemos que <strong style={{ color: '#4AFF5A' }}>cada negócio é único.</strong> É por isso que não temos uma tabela fixa de preços. Quero garantir que você <strong style={{ color: '#4AFF5A' }}>pague pelo que realmente precisa</strong>, sem surpresas ou custos extras.
+        </p>
+
+        <h3 style={{ fontFamily: 'Bebas Neue', fontSize: 40, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#4AFF5A', marginBottom: 20 }}>
+          Mas, calma! Te darei uma consultoria gratuita
+        </h3>
+
+        <p style={{ fontFamily: 'Inter', fontSize: 16, color: '#A1A1AA', lineHeight: 1.7, maxWidth: 560, margin: '0 auto 40px' }}>
+          Antes de falarmos de números, <strong style={{ color: '#4AFF5A' }}>quero conhecer a fundo a sua empresa.</strong> Ofereço um encontro inicial sem custos para explorarmos suas metas.
+        </p>
+
+        <button className="ibtn" onClick={openModal} style={{
+          background: '#4AFF5A', color: '#050505', fontFamily: 'Bebas Neue',
+          fontSize: 22, letterSpacing: '0.08em', textTransform: 'uppercase',
+          padding: '20px 52px', borderRadius: 9999,
+          display: 'inline-flex', alignItems: 'center', gap: 12,
+        }}>
+          <span>Agendar Reunião de Diagnóstico</span>
+          <span>→</span>
+        </button>
       </div>
     </section>
   );
-};
-
-export default Pricing;
+}

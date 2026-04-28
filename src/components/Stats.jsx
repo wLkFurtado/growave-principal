@@ -1,55 +1,62 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useIsMobile, useIsTablet, useCounter } from '../hooks/useBreakpoint';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Stats = () => {
-  const container = useRef(null);
+function AnimatedStat({ num, suffix, title, sub }) {
+  const [count, ref] = useCounter(num, 1600);
+  const isMobile = useIsMobile();
+  return (
+    <div ref={ref} className="stat-item" style={{
+      borderLeft: isMobile ? 'none' : '1px solid #222',
+      borderTop: isMobile ? '1px solid #222' : 'none',
+      paddingLeft: isMobile ? 0 : 48,
+      paddingTop: isMobile ? 32 : 0,
+    }}>
+      <div style={{ fontFamily: 'Bebas Neue', fontSize: 80, color: '#EAEAEA', lineHeight: 1, letterSpacing: '0.04em' }}>
+        {count}{suffix}
+      </div>
+      <div style={{ fontFamily: 'Bebas Neue', fontSize: 18, color: '#4AFF5A', letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: 8 }}>{title}</div>
+      <p style={{ fontFamily: 'Inter', fontSize: 13, color: '#A1A1AA', marginTop: 6, lineHeight: 1.6 }}>{sub}</p>
+    </div>
+  );
+}
 
-  useLayoutEffect(() => {
-    let ctx = gsap.context(() => {
-      gsap.from(".stat-item", {
-        scrollTrigger: {
-          trigger: container.current,
-          start: "top 80%",
-        },
-        y: 40,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: "power3.out"
-      });
-    }, container);
-    return () => ctx.revert();
+export default function Stats() {
+  const ref = useRef(null);
+  const isMobile = useIsMobile();
+  const isTablet = useIsTablet();
+
+  useEffect(() => {
+    gsap.from(ref.current.querySelectorAll('.stat-item'), {
+      scrollTrigger: { trigger: ref.current, start: 'top 80%' },
+      y: 40, opacity: 0, duration: 1, stagger: 0.2, ease: 'power3.out',
+    });
   }, []);
 
   return (
-    <section ref={container} className="py-24 border-y border-border bg-[#030303] relative overflow-hidden">
-      <div className="container mx-auto px-8 md:px-16 grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
-        
-        <div className="stat-item flex flex-col gap-2">
-          <h2 className="font-heading text-5xl md:text-7xl text-primary leading-none uppercase tracking-wide">Números <br/> Que Falam</h2>
-          <p className="text-textMuted font-body text-sm mt-2 max-w-xs mx-auto md:mx-0">
-            Resultados que refletem o compromisso e o avanço contínuo da Growave e de nossos parceiros de negócios.
+    <section ref={ref} style={{
+      background: '#030303', borderTop: '1px solid #222', borderBottom: '1px solid #222',
+      padding: isMobile ? '60px 24px' : '80px 40px',
+    }}>
+      <div style={{
+        maxWidth: 1100, margin: '0 auto', display: 'grid',
+        gridTemplateColumns: isMobile ? '1fr' : isTablet ? '1fr 1fr' : 'repeat(3, 1fr)',
+        gap: isMobile ? 40 : 0,
+      }}>
+        <div className="stat-item" style={{ paddingRight: 48 }}>
+          <div style={{ fontFamily: 'Bebas Neue', fontSize: 64, color: '#4AFF5A', lineHeight: 1, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+            Números<br />Que Falam
+          </div>
+          <p style={{ fontFamily: 'Inter', fontSize: 13, color: '#A1A1AA', marginTop: 12, lineHeight: 1.6, maxWidth: 260 }}>
+            Resultados que refletem o compromisso e o avanço contínuo da Growave.
           </p>
         </div>
-
-        <div className="stat-item flex flex-col justify-center border-l-0 md:border-l border-border md:pl-12">
-          <span className="font-heading text-7xl md:text-8xl text-white">40+</span>
-          <h3 className="font-heading text-xl text-primary tracking-wide uppercase mt-2">Empresas Escaladas</h3>
-          <p className="text-textMuted font-body text-sm mt-1">Negócios e marcas transformadas em todo o Brasil.</p>
-        </div>
-
-        <div className="stat-item flex flex-col justify-center border-l-0 md:border-l border-border md:pl-12">
-          <span className="font-heading text-7xl md:text-8xl text-white">6 <span className="text-4xl">Anos</span></span>
-          <h3 className="font-heading text-xl text-primary tracking-wide uppercase mt-2">De Experiência</h3>
-          <p className="text-textMuted font-body text-sm mt-1">Tração real, engenharia de vendas e marketing de resultados.</p>
-        </div>
-
+        <AnimatedStat num={40} suffix="+" title="Empresas Escaladas" sub="Negócios e marcas transformadas em todo o Brasil." />
+        <AnimatedStat num={6} suffix=" Anos" title="De Experiência" sub="Tração real, engenharia de vendas e marketing de resultados." />
       </div>
     </section>
   );
-};
-
-export default Stats;
+}

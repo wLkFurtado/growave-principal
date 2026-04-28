@@ -1,86 +1,81 @@
-import { useLayoutEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { AlertCircle, CheckCircle2 } from 'lucide-react';
+import { useIsMobile } from '../hooks/useBreakpoint';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Comparison = () => {
-  const ref = useRef(null);
+const problems = [
+  'Vendas dependentes de esforço humano e horário comercial',
+  'Atendimento com gargalos (demora a responder, almoço, folga)',
+  'Falta de padronização nas abordagens comerciais',
+  'Esquecimento de follow-ups e leads caindo no esquecimento',
+  'Nenhuma visibilidade sobre o ROI real de cada campanha',
+];
+const solutions = [
+  'Máquina de captação e atendimento 24h por dia',
+  'Automações que vendem e nutrem enquanto você descansa',
+  'Script IA validado e sempre 100% consistente',
+  'CRM próprio: zero esquecimento, histórico completo de cada lead',
+  'Dashboard de resultados com rastreamento ponta-a-ponta',
+];
 
-  useLayoutEffect(() => {
-    let ctx = gsap.context(() => {
-      gsap.from(".compare-col", {
-        scrollTrigger: {
-          trigger: ref.current,
-          start: "top 70%",
-        },
-        y: 60,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.3,
-        ease: "power2.out"
-      });
-    }, ref);
-    return () => ctx.revert();
+export default function Comparison() {
+  const ref = useRef(null);
+  const isMobile = useIsMobile();
+
+  useEffect(() => {
+    gsap.from(ref.current.querySelectorAll('.compare-col'), {
+      scrollTrigger: { trigger: ref.current, start: 'top 75%' },
+      y: 60, opacity: 0, duration: 1, stagger: 0.25, ease: 'power2.out',
+    });
   }, []);
 
-  const problems = [
-    "Vendas dependentes de esforço humano e horário comercial",
-    "Atendimento com gargalos (demora a responder, almoço, folga)",
-    "Falta de padronização nas abordagens comerciais",
-    "Esquecimento de follow-ups e leads caindo no esquecimento",
-    "Nenhuma visibilidade sobre o ROI real de cada campanha"
-  ];
-
-  const solutions = [
-    "Máquina de captação e atendimento 24h por dia",
-    "Automações que vendem e nutrem enquanto você descansa",
-    "Script IA validado e sempre 100% consistente",
-    "CRM próprio: zero esquecimento, histórico completo de cada lead",
-    "Dashboard de resultados com rastreamento ponta-a-ponta"
-  ];
-
   return (
-    <section id="comparison" ref={ref} className="py-32 px-4 md:px-16 container mx-auto">
-      <div className="text-center mb-16">
-        <h2 className="text-5xl md:text-7xl font-heading text-white uppercase tracking-wide">O Problema <span className="text-textMuted">vs.</span> A Solução</h2>
-        <p className="text-textMuted max-w-xl mx-auto mt-4 font-body">Pare de perder vendas e desgastar sua equipe. Automatize os processos mecânicos e ganhe escala real.</p>
+    <section id="método" ref={ref} style={{ padding: isMobile ? '72px 20px' : '100px 40px', maxWidth: 1100, margin: '0 auto' }}>
+      <div style={{ textAlign: 'center', marginBottom: 56 }}>
+        <h2 style={{ fontFamily: 'Bebas Neue', fontSize: 'clamp(40px, 6vw, 72px)', letterSpacing: '0.04em', textTransform: 'uppercase', color: '#EAEAEA', lineHeight: 1 }}>
+          O Problema <span style={{ color: '#A1A1AA' }}>vs.</span> A Solução
+        </h2>
+        <p style={{ fontFamily: 'Inter', color: '#A1A1AA', fontSize: 15, marginTop: 16, maxWidth: 480, margin: '16px auto 0' }}>
+          Pare de perder vendas e desgastar sua equipe. Automatize os processos mecânicos e ganhe escala real.
+        </p>
       </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-        <div className="compare-col bg-surface/30 border border-red-500/20 rounded-3xl p-8 relative">
-          <div className="absolute top-0 right-6 -translate-y-1/2 bg-red-500/10 border border-red-500/30 text-red-500 px-4 py-1 rounded-full text-xs font-mono uppercase tracking-widest">
-            A Maioria das Empresas
-          </div>
-          <h3 className="font-heading text-3xl mb-6 text-red-400 tracking-wide">Processos Manuais</h3>
-          <ul className="flex flex-col gap-5">
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 24 }}>
+        <div className="compare-col" style={{ background: 'rgba(17,17,17,0.30)', border: '1px solid rgba(239,68,68,0.20)', borderRadius: 32, padding: 36, position: 'relative' }}>
+          <div style={{
+            position: 'absolute', top: 0, right: 24, transform: 'translateY(-50%)',
+            background: 'rgba(239,68,68,0.10)', border: '1px solid rgba(239,68,68,0.30)',
+            color: 'rgba(239,68,68,0.9)', padding: '4px 14px', borderRadius: 9999,
+            fontFamily: 'JetBrains Mono', fontSize: 9, letterSpacing: '0.15em', textTransform: 'uppercase',
+          }}>A Maioria das Empresas</div>
+          <h3 style={{ fontFamily: 'Bebas Neue', fontSize: 30, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'rgba(239,68,68,0.9)', marginBottom: 24 }}>Processos Manuais</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             {problems.map((p, i) => (
-              <li key={i} className="flex gap-4 items-start">
-                <AlertCircle className="text-red-500/70 shrink-0 mt-0.5" size={20} />
-                <span className="text-textDefault/80 text-sm md:text-base">{p}</span>
-              </li>
+              <div key={i} style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
+                <span style={{ color: 'rgba(239,68,68,0.7)', flexShrink: 0, marginTop: 2, fontSize: 16 }}>✕</span>
+                <span style={{ fontFamily: 'Inter', fontSize: 14, color: 'rgba(234,234,234,0.8)', lineHeight: 1.5 }}>{p}</span>
+              </div>
             ))}
-          </ul>
-        </div>
-
-        <div className="compare-col bg-primary/5 border border-primary/30 rounded-3xl p-8 relative shadow-glow">
-          <div className="absolute top-0 right-6 -translate-y-1/2 bg-primary text-black px-4 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-widest">
-            O Padrão Growave
           </div>
-          <h3 className="font-heading text-3xl mb-6 text-primary tracking-wide">Sistema Full-Stack</h3>
-          <ul className="flex flex-col gap-5">
+        </div>
+        <div className="compare-col" style={{ background: 'rgba(74,255,90,0.04)', border: '1px solid rgba(74,255,90,0.30)', borderRadius: 32, padding: 36, position: 'relative', boxShadow: '0 0 40px rgba(74,255,90,0.08)' }}>
+          <div style={{
+            position: 'absolute', top: 0, right: 24, transform: 'translateY(-50%)',
+            background: '#4AFF5A', color: '#050505', padding: '4px 14px', borderRadius: 9999,
+            fontFamily: 'JetBrains Mono', fontSize: 9, fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase',
+          }}>O Padrão Growave</div>
+          <h3 style={{ fontFamily: 'Bebas Neue', fontSize: 30, letterSpacing: '0.04em', textTransform: 'uppercase', color: '#4AFF5A', marginBottom: 24 }}>Sistema Full-Stack</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             {solutions.map((s, i) => (
-              <li key={i} className="flex gap-4 items-start">
-                <CheckCircle2 className="text-primary shrink-0 mt-0.5" size={20} />
-                <span className="text-white font-medium text-sm md:text-base">{s}</span>
-              </li>
+              <div key={i} style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
+                <span style={{ color: '#4AFF5A', flexShrink: 0, marginTop: 2, fontSize: 16 }}>✓</span>
+                <span style={{ fontFamily: 'Inter', fontSize: 14, color: '#EAEAEA', fontWeight: 500, lineHeight: 1.5 }}>{s}</span>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       </div>
     </section>
   );
-};
-
-export default Comparison;
+}
