@@ -20,8 +20,6 @@ export default function ScheduleModal({ isOpen, onClose }) {
           position: 'absolute', top: 20, right: 20, background: 'none',
           border: 'none', color: '#555', fontSize: 22, cursor: 'pointer', lineHeight: 1,
         }}>×</button>
-        <div style={{ fontFamily: 'JetBrains Mono', fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#4AFF5A', marginBottom: 12 }}>/ Agendar Consultoria</div>
-        <h2 style={{ fontFamily: 'Bebas Neue', fontSize: 36, letterSpacing: '0.04em', textTransform: 'uppercase', color: '#EAEAEA', marginBottom: 24 }}>Vamos Conversar?</h2>
         <iframe
           src="https://link.growave.com.br/widget/survey/4QmaMiKwGhzg6kpS0MJD"
           id="4QmaMiKwGhzg6kpS0MJD"
