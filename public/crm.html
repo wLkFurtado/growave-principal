@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Growave CRM — Tudo que sua empresa precisa em uma única ferramenta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --green: #4AFF5A; --green-light: #7FFF8A; --green-dark: #2EDD3E;
+  --bg: #050505; --surface: #0d0d0d; --surface-alt: #111;
+  --border: #1e1e1e; --border-green: rgba(74,255,90,0.18); --border-green-h: rgba(74,255,90,0.5);
+  --text: #eaeaea; --muted: #a1a1aa; --dim: #5a5a62; --danger: #ff4444;
+  --glow: 0 0 24px rgba(74,255,90,0.18); --glow-s: 0 0 48px rgba(74,255,90,0.35);
+  --ease: cubic-bezier(0.25,0.46,0.45,0.94);
+  --fh: 'Bebas Neue',sans-serif; --fb: 'Inter',sans-serif; --fm: 'JetBrains Mono',monospace;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--fb); overflow-x: hidden; line-height: 1.6; }
+body::after { content:''; position:fixed; inset:0; pointer-events:none; z-index:9999; opacity:.035; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+/* ── NAV ── */
+#nav-wrap { position:fixed; top:16px; left:0; width:100%; z-index:200; display:flex; justify-content:center; padding:0 20px; }
+#nav { display:flex; align-items:center; justify-content:space-between; width:100%; max-width:1200px; background:rgba(5,5,5,0.15); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.06); border-radius:9999px; padding:8px 10px 8px 20px; transition:background .4s,border-color .4s,box-shadow .4s; }
+#nav.scrolled { background:rgba(5,5,5,0.93); backdrop-filter:blur(28px); border-color:rgba(255,255,255,0.09); box-shadow:0 6px 30px rgba(0,0,0,0.6); }
+.nav-logo { height:36px; object-fit:contain; }
+.nav-links { display:flex; gap:28px; }
+.nav-link { font-size:13px; font-weight:600; color:var(--muted); text-decoration:none; letter-spacing:.02em; transition:color .2s; cursor:pointer; }
+.nav-link:hover { color:var(--text); }
+.btn-nav-ghost { background:transparent; color:var(--text); font-weight:600; border:1px solid rgba(255,255,255,0.15); border-radius:9999px; padding:11px 22px; font-size:13px; cursor:pointer; transition:border-color .2s; text-decoration:none; }
+.btn-nav-ghost:hover { border-color:var(--green); color:var(--green); }
+.btn-nav { background:var(--green); color:#000; font-weight:800; border:none; border-radius:9999px; padding:12px 24px; font-size:13px; cursor:pointer; transition:transform .2s,box-shadow .2s,background .2s; }
+.btn-nav:hover { transform:translateY(-1px); box-shadow:var(--glow-s); background:var(--green-light); }
+.nav-actions { display:flex; gap:10px; align-items:center; }
+
+/* ── HERO ── */
+#hero { position:relative; min-height:100vh; display:flex; align-items:center; padding:140px 32px 80px; overflow:hidden; }
+.hero-bg { position:absolute; inset:0; background:radial-gradient(ellipse 70% 60% at 50% 40%, rgba(74,255,90,0.06) 0%, transparent 70%); }
+.hero-bg::after { content:''; position:absolute; inset:0; background-image:linear-gradient(rgba(74,255,90,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(74,255,90,0.04) 1px,transparent 1px); background-size:60px 60px; mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 100%); }
+.hero-orbs { position:absolute; inset:0; pointer-events:none; }
+.orb { position:absolute; border-radius:50%; filter:blur(40px); }
+.orb.o1 { top:10%; left:8%; width:300px; height:300px; background:radial-gradient(circle, rgba(74,255,90,0.18), transparent 70%); }
+.orb.o2 { bottom:10%; right:5%; width:380px; height:380px; background:radial-gradient(circle, rgba(74,255,90,0.12), transparent 70%); }
+.orb.o3 { top:50%; right:30%; width:200px; height:200px; background:radial-gradient(circle, rgba(74,255,90,0.08), transparent 70%); }
+.hero-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1.1fr 1fr; gap:48px; align-items:center; position:relative; z-index:2; width:100%; }
+.hero-badge { display:inline-flex; align-items:center; gap:10px; background:rgba(17,17,17,0.9); border:1px solid rgba(74,255,90,0.25); border-radius:9999px; padding:9px 22px; margin-bottom:28px; backdrop-filter:blur(16px); }
+.badge-dot { width:7px; height:7px; background:var(--green); border-radius:50%; box-shadow:0 0 8px rgba(74,255,90,0.8); animation:blink 2s ease-in-out infinite; }
+@keyframes blink { 0%,100%{opacity:1;box-shadow:0 0 8px rgba(74,255,90,0.8)} 50%{opacity:.4;box-shadow:none} }
+.badge-text { font-family:var(--fm); font-size:11px; text-transform:uppercase; letter-spacing:.2em; color:var(--green); }
+.hero-title { font-family:var(--fh); text-transform:uppercase; letter-spacing:.02em; line-height:.9; color:var(--text); font-size:clamp(48px,5.6vw,84px); margin-bottom:24px; }
+.hero-title .ac { color:var(--green); display:inline-block; text-shadow:0 0 60px rgba(74,255,90,0.35); }
+.hero-sub { font-size:clamp(15px,1.4vw,18px); color:var(--muted); max-width:540px; line-height:1.65; margin-bottom:36px; }
+.hero-sub strong { color:var(--text); font-weight:600; }
+.hero-cta { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:32px; }
+.btn-hero { background:var(--green); color:#000; font-weight:800; border:none; border-radius:9999px; padding:18px 38px; font-size:15px; cursor:pointer; box-shadow:var(--glow-s); display:inline-flex; align-items:center; gap:10px; transition:transform .25s var(--ease),box-shadow .25s,background .2s; text-decoration:none; }
+.btn-hero:hover { transform:translateY(-2px); box-shadow:0 0 70px rgba(74,255,90,0.45); background:var(--green-light); }
+.btn-ghost-hero { background:transparent; color:var(--text); font-weight:600; border:1px solid var(--border); border-radius:9999px; padding:18px 32px; font-size:15px; cursor:pointer; transition:color .2s,border-color .2s; }
+.btn-ghost-hero:hover { color:var(--green); border-color:rgba(74,255,90,0.4); }
+.hero-channels { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+.hero-channels-label { font-family:var(--fm); font-size:10px; text-transform:uppercase; letter-spacing:.18em; color:var(--dim); margin-right:6px; }
+.hero-ch { background:rgba(17,17,17,0.85); border:1px solid var(--border); border-radius:9999px; padding:7px 14px; font-size:11px; color:var(--muted); display:flex; align-items:center; gap:6px; transition:border-color .2s,color .2s; }
+.hero-ch:hover { border-color:rgba(74,255,90,0.3); color:var(--text); }
+.hero-ch-dot { width:6px; height:6px; border-radius:50%; background:var(--green); }
+
+/* ── HERO MOCK PLATFORM ── */
+.hero-platform { position:relative; }
+.platform-frame { background:linear-gradient(135deg,#111,#0a0a0a); border:1px solid var(--border-green); border-radius:18px; overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(74,255,90,0.04), var(--glow-s); position:relative; }
+.platform-bar { background:rgba(20,20,20,0.95); border-bottom:1px solid var(--border); padding:10px 14px; display:flex; align-items:center; gap:8px; }
+.pl-dot { width:10px; height:10px; border-radius:50%; }
+.pl-url { flex:1; background:rgba(0,0,0,0.4); border:1px solid var(--border); border-radius:6px; padding:5px 10px; font-family:var(--fm); font-size:9px; color:var(--green); letter-spacing:.05em; text-align:center; }
+.platform-body { padding:18px; display:grid; grid-template-columns:90px 1fr; gap:14px; min-height:340px; }
+.pl-side { background:rgba(15,15,15,0.95); border:1px solid var(--border); border-radius:10px; padding:14px 8px; display:flex; flex-direction:column; gap:6px; }
+.pl-side-item { padding:8px 6px; font-family:var(--fm); font-size:9px; text-transform:uppercase; color:var(--muted); border-radius:5px; letter-spacing:.05em; }
+.pl-side-item.active { background:rgba(74,255,90,0.12); color:var(--green); border:1px solid rgba(74,255,90,0.25); }
+.pl-main { display:flex; flex-direction:column; gap:10px; }
+.pl-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+.pl-stat { background:rgba(15,15,15,0.9); border:1px solid var(--border); border-radius:10px; padding:10px; }
+.pl-stat-label { font-family:var(--fm); font-size:8px; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); margin-bottom:4px; }
+.pl-stat-val { font-family:var(--fh); font-size:24px; color:var(--green); line-height:1; }
+.pl-stat-trend { font-size:10px; color:var(--green); margin-top:4px; }
+.pl-chart { background:rgba(15,15,15,0.9); border:1px solid var(--border); border-radius:10px; padding:14px; flex:1; min-height:140px; position:relative; }
+.pl-chart-title { font-family:var(--fm); font-size:9px; text-transform:uppercase; letter-spacing:.12em; color:var(--green); margin-bottom:8px; }
+.pl-chart-svg { width:100%; height:90px; }
+.pl-leads { display:flex; gap:6px; }
+.pl-lead { flex:1; background:rgba(15,15,15,0.9); border:1px solid rgba(74,255,90,0.15); border-radius:8px; padding:8px; font-size:9px; }
+.pl-lead-name { color:var(--text); font-weight:600; }
+.pl-lead-tag { color:var(--green); font-family:var(--fm); margin-top:2px; }
+
+/* ── MARQUEE FUNCIONALIDADES ── */
+#marquee { padding:24px 0; background:#000; border-top:1px solid var(--border); border-bottom:1px solid var(--border); overflow:hidden; }
+.marq-track { display:flex; width:max-content; animation:scroll-mq 50s linear infinite; }
+.marq-track-rev { animation:scroll-mq-rev 60s linear infinite; }
+@keyframes scroll-mq { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+@keyframes scroll-mq-rev { 0%{transform:translateX(-50%)} 100%{transform:translateX(0)} }
+.marq-item { font-family:var(--fh); font-size:clamp(20px,2.4vw,32px); text-transform:uppercase; letter-spacing:.04em; padding:0 18px; color:var(--text); white-space:nowrap; line-height:1; display:flex; align-items:center; }
+.marq-item .plus { color:var(--green); margin-left:18px; font-size:.75em; }
+.marq-item.outline { color:transparent; -webkit-text-stroke:1px rgba(74,255,90,0.5); }
+
+/* ── SECTION COMMON ── */
+.sw { max-width:1200px; margin:0 auto; }
+.sh { text-align:center; margin-bottom:64px; }
+.eyebrow { font-family:var(--fm); font-size:10px; text-transform:uppercase; letter-spacing:.22em; color:var(--green); margin-bottom:16px; display:block; }
+.sec-title { font-family:var(--fh); font-size:clamp(44px,6vw,80px); text-transform:uppercase; letter-spacing:.03em; line-height:.88; }
+.sec-title .ac { color:var(--green); }
+.sec-sub { font-size:17px; color:var(--muted); max-width:620px; margin:18px auto 0; line-height:1.65; }
+
+/* ── FEATURES GRID (12 cards) ── */
+#features { padding:100px 32px; background:#000; }
+.feat-intro { text-align:center; margin-bottom:64px; }
+.feat-intro h2 { font-family:var(--fh); font-size:clamp(40px,5vw,72px); text-transform:uppercase; letter-spacing:.03em; line-height:.92; margin-bottom:18px; }
+.feat-intro h2 .ac { color:var(--green); }
+.feat-intro p { font-size:17px; color:var(--muted); max-width:600px; margin:0 auto; line-height:1.65; }
+.feat-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+.feat-card { background:linear-gradient(160deg,#141414,#0a0a0a); border:1px solid var(--border-green); border-radius:18px; padding:26px; position:relative; overflow:hidden; transition:transform .35s var(--ease),border-color .3s,box-shadow .3s; }
+.feat-card::before { content:''; position:absolute; inset:0; background-image:linear-gradient(rgba(74,255,90,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(74,255,90,0.04) 1px,transparent 1px); background-size:20px 20px; pointer-events:none; }
+.feat-card::after { content:''; position:absolute; top:0; left:10%; right:10%; height:1px; background:linear-gradient(to right,transparent,var(--green),transparent); opacity:0; transition:opacity .3s; }
+.feat-card:hover { transform:translateY(-4px); border-color:var(--border-green-h); box-shadow:0 20px 60px rgba(0,0,0,0.5),var(--glow); }
+.feat-card:hover::after { opacity:1; }
+.feat-card:hover .feat-icon { background:rgba(74,255,90,0.2); border-color:rgba(74,255,90,0.5); }
+.feat-card:hover .feat-title { color:var(--green); }
+.feat-icon { width:52px; height:52px; border-radius:12px; background:rgba(74,255,90,0.1); border:1px solid rgba(74,255,90,0.2); display:flex; align-items:center; justify-content:center; margin-bottom:16px; position:relative; z-index:1; transition:background .3s,border-color .3s; }
+.feat-title { font-size:16px; font-weight:800; letter-spacing:.02em; margin-bottom:10px; color:var(--text); transition:color .3s; position:relative; z-index:1; }
+.feat-desc { font-size:13px; color:var(--muted); line-height:1.65; position:relative; z-index:1; }
+.feat-tudo { grid-column:span 4; background:linear-gradient(135deg,rgba(74,255,90,0.1),rgba(74,255,90,0.02)); border:1px solid var(--border-green-h); border-radius:18px; padding:40px; text-align:center; }
+.feat-tudo h3 { font-family:var(--fh); font-size:clamp(36px,5vw,60px); text-transform:uppercase; letter-spacing:.03em; color:var(--green); margin-bottom:20px; line-height:.92; }
+.feat-tudo p { font-size:16px; color:var(--muted); margin-bottom:28px; max-width:520px; margin-left:auto; margin-right:auto; }
+
+/* ── SUBSTITUI TABLE ── */
+#substitui { padding:100px 32px; background:linear-gradient(180deg,#000,#050505,#000); position:relative; overflow:hidden; }
+#substitui::before { content:''; position:absolute; top:30%; right:-200px; width:500px; height:500px; background:radial-gradient(circle,rgba(74,255,90,0.05),transparent 70%); border-radius:50%; filter:blur(60px); }
+.sub-table { max-width:1100px; margin:0 auto; background:linear-gradient(160deg,rgba(15,15,15,0.95),rgba(8,8,8,0.95)); border:1px solid var(--border-green); border-radius:24px; overflow:hidden; backdrop-filter:blur(8px); }
+.sub-head { display:grid; grid-template-columns:2fr 2fr 1fr; gap:20px; padding:18px 32px; background:rgba(74,255,90,0.06); border-bottom:1px solid var(--border-green); }
+.sub-head-cell { font-family:var(--fm); font-size:11px; text-transform:uppercase; letter-spacing:.18em; color:var(--green); }
+.sub-row { display:grid; grid-template-columns:2fr 2fr 1fr; gap:20px; padding:22px 32px; border-bottom:1px solid var(--border); align-items:center; transition:background .25s; }
+.sub-row:last-of-type { border-bottom:none; }
+.sub-row:hover { background:rgba(74,255,90,0.025); }
+.sub-row.total { background:linear-gradient(90deg,rgba(74,255,90,0.04),rgba(74,255,90,0.08)); border-top:1px solid var(--border-green); }
+.sub-feat { display:flex; align-items:center; gap:14px; }
+.sub-feat-icon { width:38px; height:38px; border-radius:10px; background:rgba(74,255,90,0.08); border:1px solid rgba(74,255,90,0.2); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--green); }
+.sub-feat-name { font-size:15px; font-weight:600; color:var(--text); }
+.sub-replaces { display:flex; flex-wrap:wrap; gap:5px; }
+.sub-replace-chip { background:rgba(255,255,255,0.04); border:1px solid var(--border); border-radius:6px; padding:4px 10px; font-size:11px; color:var(--dim); font-weight:500; text-decoration:line-through; opacity:.7; }
+.sub-cost { text-align:right; font-family:var(--fh); font-size:24px; color:var(--muted); letter-spacing:.02em; line-height:1; }
+.sub-row.total .sub-cost { font-size:32px; color:var(--text); }
+.sub-row.total .sub-feat-name { font-size:18px; font-weight:700; }
+.sub-final { padding:36px 32px; background:linear-gradient(135deg,rgba(74,255,90,0.12),rgba(74,255,90,0.04)); display:grid; grid-template-columns:1fr auto; gap:24px; align-items:center; }
+.sub-final-left { display:flex; flex-direction:column; gap:6px; }
+.sub-final-label { font-family:var(--fm); font-size:11px; text-transform:uppercase; letter-spacing:.18em; color:var(--green); }
+.sub-final-name { font-family:var(--fh); font-size:32px; color:var(--text); letter-spacing:.02em; }
+.sub-final-name .ac { color:var(--green); }
+.sub-final-price { text-align:right; }
+.sub-final-was { font-size:13px; color:var(--muted); text-decoration:line-through; margin-bottom:4px; }
+.sub-final-now { font-family:var(--fh); font-size:64px; color:var(--green); line-height:1; text-shadow:0 0 40px rgba(74,255,90,0.3); }
+.sub-final-now sup { font-size:24px; vertical-align:top; margin-top:8px; display:inline-block; }
+.sub-final-now span { font-size:18px; font-family:var(--fb); font-weight:400; color:var(--muted); }
+.sub-cta { text-align:center; margin-top:48px; }
+.savings-callout { display:inline-flex; align-items:center; gap:10px; background:rgba(74,255,90,0.08); border:1px solid rgba(74,255,90,0.3); border-radius:9999px; padding:10px 24px; margin-bottom:24px; }
+.savings-callout-text { font-size:14px; color:var(--text); font-weight:600; }
+.savings-callout-text strong { color:var(--green); font-family:var(--fm); }
+
+/* ── PLATFORM PREVIEW ── */
+#platform { padding:100px 32px; background:#000; }
+.pl-preview { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; }
+.pl-preview-content h2 { font-family:var(--fh); font-size:clamp(40px,5vw,68px); text-transform:uppercase; letter-spacing:.03em; line-height:.92; margin-bottom:20px; }
+.pl-preview-content h2 .ac { color:var(--green); }
+.pl-preview-content p { font-size:16px; color:var(--muted); line-height:1.7; margin-bottom:24px; }
+.pl-feats-list { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:32px; }
+.pl-feat-li { display:flex; align-items:center; gap:10px; font-size:14px; color:#d0d0d0; }
+.pl-feat-li-icon { width:24px; height:24px; border-radius:50%; background:rgba(74,255,90,0.12); border:1px solid rgba(74,255,90,0.3); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+
+/* ── TESTIMONIALS ── */
+#testimonials { padding:100px 32px; background:linear-gradient(180deg,#000,rgba(10,20,10,0.15),#000); }
+.t-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; max-width:1100px; margin:0 auto; }
+.t-card { background:linear-gradient(135deg,rgba(14,14,14,0.9),rgba(8,8,8,0.9)); border:1px solid rgba(74,255,90,0.1); border-radius:20px; padding:32px; transition:border-color .3s,transform .3s; position:relative; overflow:hidden; }
+.t-card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:1px; background:linear-gradient(to right,transparent,rgba(74,255,90,0.3),transparent); opacity:0; transition:opacity .3s; }
+.t-card:hover { border-color:rgba(74,255,90,0.3); transform:translateY(-4px); }
+.t-card:hover::after { opacity:1; }
+.t-stars { display:flex; gap:3px; margin-bottom:18px; }
+.t-star { color:var(--green); font-size:14px; }
+.t-quote { font-size:14px; font-style:italic; color:#c8c8c8; line-height:1.7; margin-bottom:24px; }
+.t-author { display:flex; align-items:center; gap:12px; }
+.t-avatar { width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg,rgba(74,255,90,0.25),rgba(74,255,90,0.08)); border:1.5px solid rgba(74,255,90,0.3); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:var(--green); flex-shrink:0; }
+.t-name { font-size:14px; font-weight:700; color:var(--text); }
+.t-role { font-size:12px; color:var(--green); }
+
+/* ── PRICING ── */
+#planos { padding:100px 32px; background:#0a0a0a; position:relative; overflow:hidden; }
+#planos::before { content:''; position:absolute; top:-200px; right:-200px; width:500px; height:500px; background:radial-gradient(circle,rgba(74,255,90,0.06),transparent 70%); border-radius:50%; filter:blur(40px); }
+#planos::after { content:''; position:absolute; bottom:-200px; left:-200px; width:500px; height:500px; background:radial-gradient(circle,rgba(74,255,90,0.04),transparent 70%); border-radius:50%; filter:blur(40px); }
+.pricing-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; max-width:920px; margin:0 auto; }
+.price-card { background:linear-gradient(160deg,#141414,#0a0a0a); border:1px solid var(--border-green); border-radius:24px; padding:40px 36px; position:relative; overflow:hidden; }
+.price-card.featured { border-color:rgba(74,255,90,0.5); background:linear-gradient(160deg,rgba(74,255,90,0.07),#0a0a0a); }
+.price-card::before { content:''; position:absolute; inset:0; background-image:linear-gradient(rgba(74,255,90,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(74,255,90,0.04) 1px,transparent 1px); background-size:20px 20px; pointer-events:none; }
+.price-card .cd { position:absolute; width:20px; height:20px; }
+.price-card .cd.tl { top:12px; left:12px; border-left:1.5px solid rgba(74,255,90,.35); border-top:1.5px solid rgba(74,255,90,.35); }
+.price-card .cd.tr { top:12px; right:12px; border-right:1.5px solid rgba(74,255,90,.35); border-top:1.5px solid rgba(74,255,90,.35); }
+.price-card .cd.bl { bottom:12px; left:12px; border-left:1.5px solid rgba(74,255,90,.35); border-bottom:1.5px solid rgba(74,255,90,.35); }
+.price-card .cd.br { bottom:12px; right:12px; border-right:1.5px solid rgba(74,255,90,.35); border-bottom:1.5px solid rgba(74,255,90,.35); }
+.price-pop { position:absolute; top:18px; right:18px; background:var(--green); color:#000; font-family:var(--fm); font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; padding:5px 12px; border-radius:9999px; z-index:2; }
+.price-tier { font-family:var(--fm); font-size:11px; text-transform:uppercase; letter-spacing:.2em; color:var(--green); margin-bottom:8px; position:relative; z-index:1; }
+.price-name { font-family:var(--fh); font-size:56px; color:var(--text); line-height:1; letter-spacing:.03em; margin-bottom:24px; position:relative; z-index:1; }
+.price-card.featured .price-name { color:var(--green); text-shadow:0 0 40px rgba(74,255,90,0.3); }
+.price-amount { font-family:var(--fh); font-size:72px; color:var(--text); line-height:1; position:relative; z-index:1; margin-bottom:6px; }
+.price-amount sup { font-size:28px; vertical-align:top; margin-top:14px; display:inline-block; }
+.price-amount span { font-size:20px; font-family:var(--fb); font-weight:400; color:var(--muted); }
+.price-period { font-size:12px; color:var(--dim); margin-bottom:28px; position:relative; z-index:1; font-family:var(--fm); letter-spacing:.05em; text-transform:uppercase; }
+.price-divider { height:1px; background:var(--border-green); margin-bottom:24px; position:relative; z-index:1; }
+.price-feats { display:flex; flex-direction:column; gap:10px; margin-bottom:32px; position:relative; z-index:1; }
+.price-feat { display:flex; align-items:flex-start; gap:10px; font-size:13.5px; color:#d0d0d0; line-height:1.5; }
+.price-feat-icon { color:var(--green); flex-shrink:0; margin-top:3px; }
+.price-feat.highlight { color:var(--green); font-weight:600; }
+.btn-price { display:block; width:100%; background:transparent; color:var(--green); font-weight:700; border:1.5px solid var(--green); border-radius:9999px; padding:16px; font-size:15px; cursor:pointer; transition:background .25s,color .25s,box-shadow .25s; position:relative; z-index:1; text-align:center; text-decoration:none; }
+.btn-price:hover { background:var(--green); color:#000; box-shadow:var(--glow-s); }
+.price-card.featured .btn-price { background:var(--green); color:#000; }
+.price-card.featured .btn-price:hover { background:var(--green-light); box-shadow:0 0 60px rgba(74,255,90,0.4); }
+.price-trial { font-size:11px; color:var(--dim); text-align:center; margin-top:14px; position:relative; z-index:1; font-family:var(--fm); letter-spacing:.05em; }
+
+/* ── FAQ ── */
+#faq { padding:100px 32px; background:#000; }
+.faq-list { max-width:780px; margin:0 auto; display:flex; flex-direction:column; gap:12px; }
+.faq-item { background:linear-gradient(135deg,rgba(15,15,15,0.9),rgba(8,8,8,0.9)); border:1px solid var(--border); border-radius:14px; overflow:hidden; transition:border-color .3s; }
+.faq-item.open { border-color:rgba(74,255,90,0.3); }
+.faq-q { width:100%; background:transparent; border:none; color:var(--text); font-family:var(--fb); font-size:16px; font-weight:600; padding:22px 26px; text-align:left; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:16px; }
+.faq-q-icon { width:32px; height:32px; border-radius:50%; background:rgba(74,255,90,0.08); border:1px solid rgba(74,255,90,0.2); display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:transform .3s,background .3s; color:var(--green); }
+.faq-item.open .faq-q-icon { transform:rotate(45deg); background:rgba(74,255,90,0.2); }
+.faq-a { max-height:0; overflow:hidden; transition:max-height .35s var(--ease); padding:0 26px; }
+.faq-a-inner { padding-bottom:22px; font-size:14px; color:var(--muted); line-height:1.7; }
+.faq-item.open .faq-a { max-height:300px; }
+
+/* ── FINAL CTA ── */
+#final-cta { padding:120px 32px; text-align:center; position:relative; overflow:hidden; background:#000; }
+#final-cta::before { content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:700px; height:700px; background:radial-gradient(circle,rgba(74,255,90,0.06),transparent 70%); border-radius:50%; pointer-events:none; }
+.final-cta-inner { max-width:760px; margin:0 auto; position:relative; z-index:1; }
+.final-cta-title { font-family:var(--fh); font-size:clamp(56px,8vw,108px); text-transform:uppercase; letter-spacing:.04em; line-height:.88; margin-bottom:28px; }
+.final-cta-title .ac { color:var(--green); text-shadow:0 0 80px rgba(74,255,90,0.35); }
+.final-cta-sub { font-size:18px; color:var(--muted); line-height:1.65; margin-bottom:48px; max-width:540px; margin-left:auto; margin-right:auto; }
+.final-cta-btns { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+.btn-cta-main { background:var(--green); color:#000; font-weight:800; border:none; border-radius:9999px; padding:22px 52px; font-size:17px; cursor:pointer; box-shadow:var(--glow-s); display:inline-flex; align-items:center; gap:12px; transition:transform .25s,box-shadow .25s,background .2s; text-decoration:none; }
+.btn-cta-main:hover { transform:translateY(-2px); box-shadow:0 0 80px rgba(74,255,90,0.45); background:var(--green-light); }
+.final-trust { display:flex; align-items:center; justify-content:center; gap:28px; margin-top:40px; flex-wrap:wrap; }
+.trust-item { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--muted); }
+.trust-dot { width:6px; height:6px; border-radius:50%; background:var(--green); }
+
+/* ── FOOTER ── */
+footer { background:#000; border-top:1px solid rgba(74,255,90,0.07); padding:48px 32px 28px; }
+.footer-inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap; padding-bottom:24px; border-bottom:1px solid rgba(74,255,90,0.06); }
+.footer-logo { height:34px; }
+.footer-tagline { font-size:13px; color:var(--muted); }
+.footer-socs { display:flex; gap:10px; }
+.footer-soc { width:36px; height:36px; border-radius:50%; background:var(--surface-alt); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:border-color .2s,background .2s; text-decoration:none; }
+.footer-soc:hover { border-color:var(--green); background:rgba(74,255,90,0.08); }
+.footer-bottom { max-width:1200px; margin:18px auto 0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+.footer-copy { font-size:11px; color:var(--dim); }
+.footer-legal { display:flex; gap:18px; }
+.footer-legal a { font-size:11px; color:var(--dim); text-decoration:none; transition:color .2s; }
+.footer-legal a:hover { color:var(--green); }
+
+/* ── WHATSAPP FAB ── */
+.wa-fab { position:fixed; bottom:24px; right:24px; width:60px; height:60px; border-radius:50%; background:#25D366; box-shadow:0 8px 24px rgba(37,211,102,0.4),0 0 0 1px rgba(37,211,102,0.4); display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:150; transition:transform .25s; text-decoration:none; }
+.wa-fab:hover { transform:scale(1.08); }
+.wa-fab svg { width:30px; height:30px; }
+
+/* ── REVEAL ── */
+.reveal { opacity:0; transform:translateY(28px); transition:opacity .7s var(--ease),transform .7s var(--ease); }
+.reveal.visible { opacity:1; transform:translateY(0); }
+.reveal-l { opacity:0; transform:translateX(-28px); transition:opacity .7s var(--ease),transform .7s var(--ease); }
+.reveal-l.visible { opacity:1; transform:translateX(0); }
+.reveal-r { opacity:0; transform:translateX(28px); transition:opacity .7s var(--ease),transform .7s var(--ease); }
+.reveal-r.visible { opacity:1; transform:translateX(0); }
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  .hero-grid { grid-template-columns:1fr; }
+  .hero-platform { order:-1; }
+  .feat-grid { grid-template-columns:1fr 1fr; }
+  .feat-tudo { grid-column:span 2; }
+  .pl-preview { grid-template-columns:1fr; }
+  .pricing-grid { grid-template-columns:1fr; }
+  .t-grid { grid-template-columns:1fr; }
+  .nav-links { display:none; }
+  .sub-head, .sub-row { grid-template-columns:1.5fr 1.5fr 1fr; padding:14px 20px; gap:12px; }
+  .sub-replace-chip { font-size:10px; padding:3px 8px; }
+  .sub-feat-icon { width:30px; height:30px; }
+  .sub-feat-name { font-size:13px; }
+  .sub-cost { font-size:18px; }
+  .sub-final { grid-template-columns:1fr; text-align:center; }
+  .sub-final-price { text-align:center; }
+  .pl-feats-list { grid-template-columns:1fr; }
+}
+@media(max-width:600px){
+  .feat-grid { grid-template-columns:1fr; }
+  .feat-tudo { grid-column:span 1; }
+  .footer-inner { flex-direction:column; align-items:center; text-align:center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<div id="nav-wrap">
+  <nav id="nav">
+    <img src="assets/logo-nova.png" class="nav-logo" alt="Growave">
+    <div class="nav-links">
+      <a href="#hero" class="nav-link">Início</a>
+      <a href="#features" class="nav-link">Funcionalidades</a>
+      <a href="#planos" class="nav-link">Planos</a>
+      <a href="#faq" class="nav-link">FAQ</a>
+    </div>
+    <div class="nav-actions">
+      <a href="#planos" class="btn-nav">Assinar agora</a>
+    </div>
+  </nav>
+</div>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-orbs"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div></div>
+  <div class="hero-grid">
+    <div>
+      <div class="hero-badge reveal">
+        <span class="badge-dot"></span>
+        <span class="badge-text">Plataforma · IA 24/7</span>
+      </div>
+      <h1 class="hero-title reveal" style="transition-delay:.08s">
+        A única ferramenta que você vai precisar para transformar
+        <span class="ac">leads em clientes</span>
+      </h1>
+      <p class="hero-sub reveal" style="transition-delay:.16s">
+        Utilizando <strong>funis, e-mail marketing, automações inteligentes, CRM, inteligência artificial, relatórios</strong> e muito mais para turbinar suas vendas.
+      </p>
+      <div class="hero-cta reveal" style="transition-delay:.24s">
+        <a href="#planos" class="btn-hero">
+          Assinar agora
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a href="#features" class="btn-ghost-hero">Ver funcionalidades</a>
+      </div>
+      <div class="hero-channels reveal" style="transition-delay:.32s">
+        <span class="hero-channels-label">Canais nativos:</span>
+        <div class="hero-ch"><span class="hero-ch-dot"></span>WhatsApp</div>
+        <div class="hero-ch"><span class="hero-ch-dot"></span>Instagram</div>
+        <div class="hero-ch"><span class="hero-ch-dot"></span>Google Ads</div>
+        <div class="hero-ch"><span class="hero-ch-dot"></span>Facebook</div>
+        <div class="hero-ch"><span class="hero-ch-dot"></span>Meta Ads</div>
+        <div class="hero-ch"><span class="hero-ch-dot"></span>E-mail</div>
+        <div class="hero-ch"><span class="hero-ch-dot"></span>SMS</div>
+      </div>
+    </div>
+    <div class="hero-platform reveal-r" style="transition-delay:.16s">
+      <div class="platform-frame">
+        <div class="platform-bar">
+          <div class="pl-dot" style="background:#ff5f57"></div>
+          <div class="pl-dot" style="background:#febc2e"></div>
+          <div class="pl-dot" style="background:#28c840"></div>
+          <div class="pl-url">app.growave.com.br/dashboard</div>
+        </div>
+        <div class="platform-body">
+          <div class="pl-side">
+            <div class="pl-side-item active">Dashboard</div>
+            <div class="pl-side-item">CRM</div>
+            <div class="pl-side-item">Funis</div>
+            <div class="pl-side-item">Chat</div>
+            <div class="pl-side-item">Auto.</div>
+            <div class="pl-side-item">Sites</div>
+            <div class="pl-side-item">Email</div>
+            <div class="pl-side-item">IA</div>
+          </div>
+          <div class="pl-main">
+            <div class="pl-stats">
+              <div class="pl-stat">
+                <div class="pl-stat-label">Leads (mês)</div>
+                <div class="pl-stat-val">847</div>
+                <div class="pl-stat-trend">▲ +28%</div>
+              </div>
+              <div class="pl-stat">
+                <div class="pl-stat-label">Conversão</div>
+                <div class="pl-stat-val">31%</div>
+                <div class="pl-stat-trend">▲ +12%</div>
+              </div>
+              <div class="pl-stat">
+                <div class="pl-stat-label">Receita</div>
+                <div class="pl-stat-val">R$184k</div>
+                <div class="pl-stat-trend">▲ +47%</div>
+              </div>
+            </div>
+            <div class="pl-chart">
+              <div class="pl-chart-title">PIPELINE · ÚLTIMOS 30 DIAS</div>
+              <svg class="pl-chart-svg" viewBox="0 0 300 90" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#4AFF5A" stop-opacity="0.4"/>
+                    <stop offset="100%" stop-color="#4AFF5A" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,70 Q30,60 60,55 T120,40 T180,30 T240,20 T300,10 L300,90 L0,90 Z" fill="url(#cg)"/>
+                <path d="M0,70 Q30,60 60,55 T120,40 T180,30 T240,20 T300,10" fill="none" stroke="#4AFF5A" stroke-width="1.8"/>
+                <circle cx="60" cy="55" r="2.5" fill="#4AFF5A"/>
+                <circle cx="120" cy="40" r="2.5" fill="#4AFF5A"/>
+                <circle cx="180" cy="30" r="2.5" fill="#4AFF5A"/>
+                <circle cx="240" cy="20" r="2.5" fill="#4AFF5A"/>
+                <circle cx="300" cy="10" r="3" fill="#4AFF5A" stroke="#4AFF5A" stroke-width="2" stroke-opacity="0.3"/>
+              </svg>
+            </div>
+            <div class="pl-leads">
+              <div class="pl-lead"><div class="pl-lead-name">João M.</div><div class="pl-lead-tag">▲ QUENTE</div></div>
+              <div class="pl-lead"><div class="pl-lead-name">Carla S.</div><div class="pl-lead-tag">● MORNO</div></div>
+              <div class="pl-lead"><div class="pl-lead-name">Rafael L.</div><div class="pl-lead-tag">+ NOVO</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MARQUEE FUNCIONALIDADES ── -->
+<div id="marquee" style="height: 75px; font-weight: 300">
+  <div class="marq-track">
+    <div class="marq-item">Funis<span class="plus">+</span></div>
+    <div class="marq-item outline">CRM<span class="plus">+</span></div>
+    <div class="marq-item">Comunidade<span class="plus">+</span></div>
+    <div class="marq-item outline">Central de Chat<span class="plus">+</span></div>
+    <div class="marq-item">Agendamentos<span class="plus">+</span></div>
+    <div class="marq-item outline">Analytics<span class="plus">+</span></div>
+    <div class="marq-item">Websites<span class="plus">+</span></div>
+    <div class="marq-item outline">E-mail Mkt<span class="plus">+</span></div>
+    <div class="marq-item">Área de membros<span class="plus">+</span></div>
+    <div class="marq-item outline">IA<span class="plus">+</span></div>
+    <div class="marq-item">Automações<span class="plus">+</span></div>
+    <div class="marq-item outline">Blogs<span class="plus">+</span></div>
+    <!-- duplicate for infinite loop -->
+    <div class="marq-item">Funis<span class="plus">+</span></div>
+    <div class="marq-item outline">CRM<span class="plus">+</span></div>
+    <div class="marq-item">Comunidade<span class="plus">+</span></div>
+    <div class="marq-item outline">Central de Chat<span class="plus">+</span></div>
+    <div class="marq-item">Agendamentos<span class="plus">+</span></div>
+    <div class="marq-item outline">Analytics<span class="plus">+</span></div>
+    <div class="marq-item">Websites<span class="plus">+</span></div>
+    <div class="marq-item outline">E-mail Mkt<span class="plus">+</span></div>
+    <div class="marq-item">Área de membros<span class="plus">+</span></div>
+    <div class="marq-item outline">IA<span class="plus">+</span></div>
+    <div class="marq-item">Automações<span class="plus">+</span></div>
+    <div class="marq-item outline">Blogs<span class="plus">+</span></div>
+  </div>
+</div>
+
+<!-- ── FEATURES GRID ── -->
+<section id="features">
+  <div class="sw">
+    <div class="feat-intro reveal">
+      <h2>Centralize suas estratégias online com<br>todas as ferramentas <span class="ac">essenciais reunidas</span></h2>
+      <p>Uma plataforma. Inúmeras possibilidades. Simplifique sua vida online.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card reveal">
+        <div class="feat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4AFF5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></div>
+        <div class="feat-title">CRM</div>
+        <div class="feat-desc">Gerencie seus leads de forma organizada e escalável, com pipeline integrado a todas as áreas do seu negócio.</div>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:.04s">
+        <div class="feat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4AFF5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <div class="feat-title">E-mail Marketing</div>
+        <div class="feat-desc">Conecte-se com sua audiência em todos os estágios do processo de compra com nossa plataforma intuitiva.</div>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:.08s">
+        <div class="feat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4AFF5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
+        <div class="feat-title">Automações</div>
+        <div class="feat-desc">Crie automações poderosas para otimizar seu marketing e aumentar a eficiência das suas campanhas.</div>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:.12s">
+        <div class="feat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4AFF5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="feat-title">Área de Membros</div>
+        <div class="feat-desc">Crie uma comunidade exclusiva oferecendo cursos e conteúdo premium no seu próprio domínio.</div>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4AFF5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg></div>
+        <div class="feat-title">A.I (Inteligência Artificial)</div>
+        <div class="feat-desc">Aproveite o poder da IA para otimizar suas operações de marketing e vendas, impulsionando resultados.</div>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:.04s">
+        <div class="feat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4AFF5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div class="feat-title">Funis</div>
+        <div class="feat-desc">Transforme visitantes em clientes com funis personalizados, upsells, downsells e automações eficientes.</div>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:.08s">
+        <div class="feat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4AFF5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <div class="feat-title">Blogs</div>
+        <div class="feat-desc">Crie conteúdo cativante para atrair tráfego orgânico e fortalecer sua presença online.</div>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:.12s">
+        <div class="feat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4AFF5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="feat-title">Comunidade</div>
+        <div class="feat-desc">Estabeleça sua tribo online, fortalecendo sua marca e criando conexões com sua audiência.</div>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4AFF5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+        <div class="feat-title">Websites</div>
+        <div class="feat-desc">Dê vida à sua presença online com sites de design impecável e alto desempenho via editor intuitivo.</div>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:.04s">
+        <div class="feat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4AFF5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <div class="feat-title">Central de Chat</div>
+        <div class="feat-desc">Centralize todas as conversas com leads e clientes em um só lugar, com atendimento personalizado.</div>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:.08s">
+        <div class="feat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4AFF5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+        <div class="feat-title">Agendamentos</div>
+        <div class="feat-desc">Agende reuniões e compromissos de forma simples e eficiente, oferecendo conveniência aos clientes.</div>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:.12s">
+        <div class="feat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4AFF5A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+        <div class="feat-title">Analytics</div>
+        <div class="feat-desc">Tenha controle total sobre as métricas do seu negócio para escalar com confiança e clareza.</div>
+      </div>
+      <div class="feat-tudo reveal">
+        <h3>E tudo que você precisar.</h3>
+        <p>Mais de 30 ferramentas integradas, atualizações constantes e novas features sem custo adicional.</p>
+        <a href="#planos" class="btn-hero">Assinar agora
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── O QUE VOCÊ PODE SUBSTITUIR ── -->
+<section id="substitui">
+  <div class="sw">
+    <div class="sh reveal">
+      <span class="eyebrow">Comparativo de custos</span>
+      <h2 class="sec-title">O que você pode<br><span class="ac">substituir</span></h2>
+      <p class="sec-sub">É hora de dizer adeus aos altos custos das suas ferramentas espalhadas em 12 assinaturas diferentes.</p>
+    </div>
+
+    <div class="sub-table reveal">
+      <div class="sub-head">
+        <div class="sub-head-cell">Funcionalidade</div>
+        <div class="sub-head-cell">Substitui</div>
+        <div class="sub-head-cell" style="text-align:right">Custo médio</div>
+      </div>
+
+      <div class="sub-row">
+        <div class="sub-feat">
+          <div class="sub-feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></div>
+          <div class="sub-feat-name">CRM e Gerenciamento de pipeline</div>
+        </div>
+        <div class="sub-replaces">
+          <span class="sub-replace-chip">HubSpot</span>
+          <span class="sub-replace-chip">Pipedrive</span>
+          <span class="sub-replace-chip">RD Station</span>
+        </div>
+        <div class="sub-cost">R$ 500/mês</div>
+      </div>
+
+      <div class="sub-row">
+        <div class="sub-feat">
+          <div class="sub-feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <div class="sub-feat-name">Funil de vendas ilimitado</div>
+        </div>
+        <div class="sub-replaces">
+          <span class="sub-replace-chip">ClickFunnels</span>
+          <span class="sub-replace-chip">Kartra</span>
+          <span class="sub-replace-chip">Builderall</span>
+        </div>
+        <div class="sub-cost">R$ 1.500/mês</div>
+      </div>
+
+      <div class="sub-row">
+        <div class="sub-feat">
+          <div class="sub-feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+          <div class="sub-feat-name">Construtor de website</div>
+        </div>
+        <div class="sub-replaces">
+          <span class="sub-replace-chip">WordPress</span>
+          <span class="sub-replace-chip">Wix</span>
+          <span class="sub-replace-chip">Webflow</span>
+          <span class="sub-replace-chip">Squarespace</span>
+        </div>
+        <div class="sub-cost">R$ 100/mês</div>
+      </div>
+
+      <div class="sub-row">
+        <div class="sub-feat">
+          <div class="sub-feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+          <div class="sub-feat-name">Pesquisa e formulários</div>
+        </div>
+        <div class="sub-replaces">
+          <span class="sub-replace-chip">Typeform</span>
+          <span class="sub-replace-chip">JotForm</span>
+          <span class="sub-replace-chip">Google Forms</span>
+          <span class="sub-replace-chip">Survey Monkey</span>
+        </div>
+        <div class="sub-cost">R$ 250/mês</div>
+      </div>
+
+      <div class="sub-row">
+        <div class="sub-feat">
+          <div class="sub-feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div class="sub-feat-name">E-mail Marketing</div>
+        </div>
+        <div class="sub-replaces">
+          <span class="sub-replace-chip">Mailchimp</span>
+          <span class="sub-replace-chip">ActiveCampaign</span>
+          <span class="sub-replace-chip">SendinBlue</span>
+          <span class="sub-replace-chip">RD Mail</span>
+        </div>
+        <div class="sub-cost">R$ 500/mês</div>
+      </div>
+
+      <div class="sub-row">
+        <div class="sub-feat">
+          <div class="sub-feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <div class="sub-feat-name">Chat e SMS Marketing</div>
+        </div>
+        <div class="sub-replaces">
+          <span class="sub-replace-chip">Twilio</span>
+          <span class="sub-replace-chip">Zenvia</span>
+          <span class="sub-replace-chip">Intercom</span>
+          <span class="sub-replace-chip">Drift</span>
+        </div>
+        <div class="sub-cost">R$ 500/mês</div>
+      </div>
+
+      <div class="sub-row">
+        <div class="sub-feat">
+          <div class="sub-feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <div class="sub-feat-name">Reservas e agendamentos</div>
+        </div>
+        <div class="sub-replaces">
+          <span class="sub-replace-chip">Calendly</span>
+          <span class="sub-replace-chip">Booksy</span>
+          <span class="sub-replace-chip">Acuity</span>
+        </div>
+        <div class="sub-cost">R$ 150/mês</div>
+      </div>
+
+      <div class="sub-row">
+        <div class="sub-feat">
+          <div class="sub-feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
+          <div class="sub-feat-name">Automações e fluxos</div>
+        </div>
+        <div class="sub-replaces">
+          <span class="sub-replace-chip">Zapier</span>
+          <span class="sub-replace-chip">Make</span>
+          <span class="sub-replace-chip">n8n</span>
+          <span class="sub-replace-chip">RD Auto</span>
+        </div>
+        <div class="sub-cost">R$ 500/mês</div>
+      </div>
+
+      <div class="sub-row">
+        <div class="sub-feat">
+          <div class="sub-feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="sub-feat-name">Cursos e produtos digitais</div>
+        </div>
+        <div class="sub-replaces">
+          <span class="sub-replace-chip">Hotmart</span>
+          <span class="sub-replace-chip">Eduzz</span>
+          <span class="sub-replace-chip">Kajabi</span>
+          <span class="sub-replace-chip">Memberkit</span>
+        </div>
+        <div class="sub-cost">Taxas + hosting</div>
+      </div>
+
+      <div class="sub-row">
+        <div class="sub-feat">
+          <div class="sub-feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18C1.61 2.1 2.47 1.2 3.55 1.2H6.5a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.16 6.16l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <div class="sub-feat-name">Rastreamento de chamadas</div>
+        </div>
+        <div class="sub-replaces">
+          <span class="sub-replace-chip">CallTrackingMetrics</span>
+          <span class="sub-replace-chip">CallRail</span>
+        </div>
+        <div class="sub-cost">R$ 450/mês</div>
+      </div>
+
+      <div class="sub-row">
+        <div class="sub-feat">
+          <div class="sub-feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <div class="sub-feat-name">Gestão de reputação</div>
+        </div>
+        <div class="sub-replaces">
+          <span class="sub-replace-chip">Reputation</span>
+          <span class="sub-replace-chip">BirdEye</span>
+          <span class="sub-replace-chip">Trustpilot</span>
+        </div>
+        <div class="sub-cost">R$ 1.500/mês</div>
+      </div>
+
+      <div class="sub-row">
+        <div class="sub-feat">
+          <div class="sub-feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+          <div class="sub-feat-name">Trackeamento e Analytics</div>
+        </div>
+        <div class="sub-replaces">
+          <span class="sub-replace-chip">Hotjar</span>
+        </div>
+        <div class="sub-cost">R$ 250/mês</div>
+      </div>
+
+      <div class="sub-row">
+        <div class="sub-feat">
+          <div class="sub-feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="sub-feat-name">Comunidade</div>
+        </div>
+        <div class="sub-replaces">
+          <span class="sub-replace-chip">Circle</span>
+          <span class="sub-replace-chip">Discourse</span>
+        </div>
+        <div class="sub-cost">R$ 500/mês</div>
+      </div>
+
+      <div class="sub-row">
+        <div class="sub-feat">
+          <div class="sub-feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg></div>
+          <div class="sub-feat-name">Assinatura de documentos</div>
+        </div>
+        <div class="sub-replaces">
+          <span class="sub-replace-chip">DocuSign</span>
+          <span class="sub-replace-chip">ClickSign</span>
+        </div>
+        <div class="sub-cost">R$ 100/mês</div>
+      </div>
+
+      <div class="sub-row total">
+        <div class="sub-feat">
+          <div class="sub-feat-icon" style="background:rgba(255,68,68,0.08);border-color:rgba(255,68,68,0.3);color:#ff4444"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+          <div class="sub-feat-name">Total que você paga hoje</div>
+        </div>
+        <div></div>
+        <div class="sub-cost" style="color:var(--danger)">R$ 6.800/mês</div>
+      </div>
+
+      <div class="sub-final">
+        <div class="sub-final-left">
+          <span class="sub-final-label">Tudo isso por apenas</span>
+          <div class="sub-final-name"><span class="ac">Growave</span> CRM</div>
+          <span style="font-size:13px;color:var(--muted)">Uma assinatura · Todas as ferramentas · Zero integrações pra fazer</span>
+        </div>
+        <div class="sub-final-price">
+          <div class="sub-final-was">de R$ 6.800/mês</div>
+          <div class="sub-final-now"><sup>R$</sup>297<span>/mês</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-cta reveal">
+      <div class="savings-callout">
+        <span style="color:var(--green);font-size:16px">⚡</span>
+        <span class="savings-callout-text">Economia de até <strong>R$ 6.503/mês</strong> trocando 12+ ferramentas por uma só</span>
+      </div>
+      <br>
+      <a href="#planos" class="btn-hero">Quero começar a economizar
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── DEPOIMENTOS ── -->
+<section id="testimonials">
+  <div class="sw">
+    <div class="sh reveal">
+      <span class="eyebrow">Quem usa, aprova</span>
+      <h2 class="sec-title">O que nossos<br><span class="ac">clientes dizem</span></h2>
+    </div>
+    <div class="t-grid">
+      <div class="t-card reveal">
+        <div class="t-stars"><span class="t-star">★</span><span class="t-star">★</span><span class="t-star">★</span><span class="t-star">★</span><span class="t-star">★</span></div>
+        <p class="t-quote">"Cancelei 6 ferramentas no primeiro mês de uso. Saí de R$ 4.200 em assinaturas pra R$ 297. E os resultados melhoraram porque tudo conversa entre si."</p>
+        <div class="t-author">
+          <div class="t-avatar">DS</div>
+          <div><div class="t-name">Dr. André Silveira</div><div class="t-role">CEO · Clínica Prevident</div></div>
+        </div>
+      </div>
+      <div class="t-card reveal" style="transition-delay:.1s">
+        <div class="t-stars"><span class="t-star">★</span><span class="t-star">★</span><span class="t-star">★</span><span class="t-star">★</span><span class="t-star">★</span></div>
+        <p class="t-quote">"A IA responde leads às 2h da manhã que antes a gente perdia. Triplicamos os agendamentos em 2 meses sem aumentar a equipe. Ferramenta absurda."</p>
+        <div class="t-author">
+          <div class="t-avatar">MC</div>
+          <div><div class="t-name">Mariana Costa</div><div class="t-role">CMO · Estética Harmony</div></div>
+        </div>
+      </div>
+      <div class="t-card reveal" style="transition-delay:.2s">
+        <div class="t-stars"><span class="t-star">★</span><span class="t-star">★</span><span class="t-star">★</span><span class="t-star">★</span><span class="t-star">★</span></div>
+        <p class="t-quote">"Migramos do RD Station + Calendly + Mailchimp + ClickFunnels. Tudo em um só lugar foi a melhor decisão. Conversão subiu de 12% para 31%."</p>
+        <div class="t-author">
+          <div class="t-avatar">RL</div>
+          <div><div class="t-name">Rafael Lemes</div><div class="t-role">Diretor Comercial · MedCenter</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PLANOS ── -->
+<section id="planos">
+  <div class="sw">
+    <div class="sh reveal">
+      <span class="eyebrow">Planos &amp; Preços</span>
+      <h2 class="sec-title">Um plano,<br>múltiplas <span class="ac">ferramentas</span></h2>
+      <p class="sec-sub">Escolha a solução completa para o seu sucesso. Sem fidelidade. Cancele quando quiser.</p>
+    </div>
+    <div class="pricing-grid">
+
+      <div class="price-card reveal-l">
+        <div class="cd tl"></div><div class="cd tr"></div><div class="cd bl"></div><div class="cd br"></div>
+        <div class="price-tier">Plano</div>
+        <div class="price-name">standard</div>
+        <div class="price-amount"><sup>R$</sup>297<span>/mês</span></div>
+        <div class="price-period">Cobrado mensalmente</div>
+        <div class="price-divider"></div>
+        <div class="price-feats">
+          <div class="price-feat highlight"><svg class="price-feat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>80.000 contatos</div>
+          <div class="price-feat highlight"><svg class="price-feat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>5 usuários</div>
+          <div class="price-feat"><svg class="price-feat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Funis ilimitados</div>
+          <div class="price-feat"><svg class="price-feat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>CRM ilimitado</div>
+          <div class="price-feat"><svg class="price-feat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Sites ilimitados</div>
+          <div class="price-feat"><svg class="price-feat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Campanhas ilimitadas</div>
+          <div class="price-feat"><svg class="price-feat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Automações de E-mail ilimitadas</div>
+          <div class="price-feat"><svg class="price-feat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Automações de SMS ilimitadas</div>
+          <div class="price-feat"><svg class="price-feat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Automações de Instagram e Facebook</div>
+          <div class="price-feat"><svg class="price-feat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Relatórios e pipelines ilimitados</div>
+          <div class="price-feat"><svg class="price-feat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Programação de posts em redes sociais</div>
+          <div class="price-feat"><svg class="price-feat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Lembretes e notificações para equipe</div>
+          <div class="price-feat"><svg class="price-feat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Suporte Growave via Chat</div>
+        </div>
+        <a href="https://buy.stripe.com/00w9ALdHw4r45aMgD4es00a" target="_blank" class="btn-price">Assinar Plano</a>
+        <p class="price-trial">Sem fidelidade · cancele a qualquer momento</p>
+      </div>
+
+      <div class="price-card featured reveal-r">
+        <div class="cd tl"></div><div class="cd tr"></div><div class="cd bl"></div><div class="cd br"></div>
+        <div class="price-pop">MAIS POPULAR</div>
+        <div class="price-tier">Plano</div>
+        <div class="price-name">Black</div>
+        <div class="price-amount"><sup>R$</sup>997<span>/mês</span></div>
+        <div class="price-period">Cobrado mensalmente</div>
+        <div class="price-divider"></div>
+        <div class="price-feats">
+          <div class="price-feat highlight"><svg class="price-feat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Contatos ilimitados</div>
+          <div class="price-feat highlight"><svg class="price-feat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Usuários ilimitados</div>
+          <div class="price-feat highlight"><svg class="price-feat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>WhatsApp ilimitado (API Oficial e Não-Oficial)</div>
+          <div class="price-feat highlight"><svg class="price-feat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Automações de WhatsApp ilimitadas</div>
+          <div class="price-feat"><svg class="price-feat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Funis, CRM e Sites ilimitados</div>
+          <div class="price-feat"><svg class="price-feat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Campanhas e automações ilimitadas</div>
+          <div class="price-feat"><svg class="price-feat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Automações de Instagram e Facebook</div>
+          <div class="price-feat"><svg class="price-feat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Relatórios e pipelines ilimitados</div>
+          <div class="price-feat"><svg class="price-feat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Integrações ilimitadas</div>
+          <div class="price-feat"><svg class="price-feat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Programação de posts em redes sociais</div>
+          <div class="price-feat"><svg class="price-feat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Lembretes e notificações para equipe</div>
+          <div class="price-feat highlight"><svg class="price-feat-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Suporte prioritário Growave</div>
+        </div>
+        <a href="https://buy.stripe.com/bJe00beLA1eS5aM86yes00b" target="_blank" class="btn-price">Assinar Plano</a>
+        <p class="price-trial">Sem fidelidade · cancele a qualquer momento</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section id="faq">
+  <div class="sw">
+    <div class="sh reveal">
+      <span class="eyebrow">Perguntas frequentes</span>
+      <h2 class="sec-title">Quer comprar, mas<br>ficou na <span class="ac">dúvida?</span></h2>
+      <p class="sec-sub">A Growave responde.</p>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q">Eu preciso pagar por updates?
+          <span class="faq-q-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Nunca! Realizamos updates com frequência, adicionando novos templates, funis, automações e estratégias — você recebe tudo de graça dentro do seu plano.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Posso cancelar quando quiser?
+          <span class="faq-q-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Sim! Sem fidelidade. Você pode cancelar a qualquer momento direto no painel, sem multas e sem precisar falar com ninguém.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Vocês ajudam na migração das minhas ferramentas atuais?
+          <span class="faq-q-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Sim! Nosso time de onboarding faz a migração dos seus contatos, funis e automações de qualquer ferramenta atual (HubSpot, RD Station, ClickFunnels, etc) sem custo adicional.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Tem suporte em português?
+          <span class="faq-q-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">100% em português, com time brasileiro respondendo via Chat dentro do painel. Suporte prioritário para clientes do plano Black.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">A Growave funciona com WhatsApp Oficial?
+          <span class="faq-q-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Sim! No plano Black você tem conexão tanto com a API oficial quanto com a API não-oficial do WhatsApp, com automações de mensagens ilimitadas.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Como funciona a IA dentro da plataforma?
+          <span class="faq-q-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">A IA responde clientes 24h por dia no WhatsApp, Instagram e Email. Qualifica leads automaticamente, agenda consultas e ainda gera copy para anúncios e e-mails de marketing.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FINAL CTA ── -->
+<section id="final-cta">
+  <div class="final-cta-inner">
+    <div class="hero-badge reveal" style="margin:0 auto 32px;display:inline-flex">
+      <span class="badge-dot"></span>
+      <span class="badge-text">Vagas abertas · Sem fidelidade</span>
+    </div>
+    <h2 class="final-cta-title reveal" style="transition-delay:.08s">
+      Pare de pagar 12 ferramentas.<br><span class="ac">Use uma só.</span>
+    </h2>
+    <p class="final-cta-sub reveal" style="transition-delay:.16s">
+      Tudo que sua empresa precisa em uma única plataforma. CRM + IA + Automações + Funis + Sites — por R$297/mês, no lugar de R$6.800.
+    </p>
+    <div class="final-cta-btns reveal" style="transition-delay:.24s">
+      <a href="#planos" class="btn-cta-main">
+        Assinar agora
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+    <div class="final-trust reveal" style="transition-delay:.32s">
+      <div class="trust-item"><div class="trust-dot"></div>Sem fidelidade</div>
+      <div class="trust-item"><div class="trust-dot"></div>Cancele quando quiser</div>
+      <div class="trust-item"><div class="trust-dot"></div>Migração gratuita</div>
+      <div class="trust-item"><div class="trust-dot"></div>Suporte 24h em português</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <img src="assets/logo-nova.png" class="footer-logo" alt="Growave">
+    <span class="footer-tagline">Tudo que sua empresa precisa em uma única ferramenta.</span>
+    <div class="footer-socs">
+      <a href="https://instagram.com/growave.agencia" class="footer-soc" target="_blank">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a1a1aa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a>
+      <a href="https://facebook.com/GrowaveAgencia" class="footer-soc" target="_blank">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a1a1aa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      </a>
+      <a href="https://wa.me/5522981611733" class="footer-soc" target="_blank">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a1a1aa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">2026 © Growave — Todos os direitos reservados.</span>
+    <div class="footer-legal">
+      <a href="#">Política de privacidade</a>
+      <a href="#">Termos &amp; condições</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── NAVBAR SCROLL ──
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+// ── REVEAL ON SCROLL ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal, .reveal-l, .reveal-r').forEach(el => observer.observe(el));
+
+// ── FAQ ACCORDION ──
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  });
+});
+</script>
+</body>
+</html>
