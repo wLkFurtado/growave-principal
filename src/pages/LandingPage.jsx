@@ -8,6 +8,7 @@ import Stats from '../components/Stats';
 import Features from '../components/Features';
 import Comparison from '../components/Comparison';
 import Protocol from '../components/Protocol';
+import PortfolioSection from '../components/PortfolioSection';
 import Pricing from '../components/Pricing';
 import Footer from '../components/Footer';
 import ScheduleModal from '../components/ScheduleModal';
@@ -29,6 +30,7 @@ export default function LandingPage() {
       <Features />
       <Comparison />
       <Protocol />
+      <PortfolioSection />
       <Pricing openModal={() => setIsModalOpen(true)} />
       <Footer />
       <ScheduleModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />

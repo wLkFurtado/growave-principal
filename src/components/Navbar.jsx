@@ -45,7 +45,7 @@ export default function Navbar({ openModal }) {
           style={{ height: 48, width: 'auto', objectFit: 'contain' }} />
         {!isMobile && (
           <div style={{ display: 'flex', gap: 32, fontFamily: 'Inter', fontSize: 13, fontWeight: 600 }}>
-            {['Soluções', 'Método', 'Estratégia'].map(l => (
+            {['Soluções', 'Método', 'Portfólio', 'Estratégia'].map(l => (
               <a key={l} href={`#${l.toLowerCase()}`}
                 style={{ color: '#EAEAEA', textDecoration: 'none', transition: 'color 200ms' }}
                 onMouseEnter={e => e.target.style.color = '#4AFF5A'}
