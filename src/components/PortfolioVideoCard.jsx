@@ -38,9 +38,7 @@ export default function PortfolioVideoCard({ video, onOpen }) {
 
   return (
     <div
-      className="break-inside-avoid mb-4 relative group cursor-pointer bg-white/5 rounded-2xl overflow-hidden border border-white/5 hover:border-[#4ade80]/40 transition-colors duration-300"
-      // reserva o espaco antes de carregar; 16/9 ate medirmos o arquivo
-      style={{ aspectRatio: width && height ? `${width} / ${height}` : '16 / 9' }}
+      className="relative w-full h-full group cursor-pointer bg-white/5 rounded-2xl overflow-hidden border border-white/5 hover:border-[#4ade80]/40 transition-colors duration-300"
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
       onClick={onOpen}

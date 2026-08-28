@@ -34,6 +34,31 @@ async function fetchCloudinary() {
   }));
 }
 
+// A listagem do Supabase nao devolve dimensoes, e o grid precisa saber a
+// orientacao antes de renderizar (senao os cards saltam de posicao ao carregar).
+// preload=metadata baixa so o atom moov, alguns KB — nao o video inteiro.
+function medirVideo(url) {
+  return new Promise(resolve => {
+    const v = document.createElement('video');
+    let terminou = false;
+    const done = (dims) => {
+      if (terminou) return;
+      terminou = true;
+      v.removeAttribute('src');
+      v.load();
+      resolve(dims);
+    };
+
+    v.preload = 'metadata';
+    v.muted = true;
+    v.onloadedmetadata = () => done({ width: v.videoWidth, height: v.videoHeight });
+    v.onerror = () => done(null);
+    // Se um arquivo demorar, o grid nao pode ficar refem dele
+    setTimeout(() => done(null), 8000);
+    v.src = url;
+  });
+}
+
 async function fetchSupabase() {
   if (!SB_URL || !SB_KEY || !SB_BUCKET) return [];
 
@@ -50,7 +75,7 @@ async function fetchSupabase() {
 
   const files = await res.json();
 
-  return files
+  const itens = files
     // Supabase serve o arquivo como esta, sem transcodificar. So aceitamos os
     // containers que tocam em todo navegador — .mov/HEVC quebra no Chrome e Firefox.
     .filter(f => f.metadata && ['video/mp4', 'video/webm'].includes(f.metadata.mimetype))
@@ -68,6 +93,10 @@ async function fetchSupabase() {
         fullUrl: url,
       };
     });
+
+  // Mede em paralelo — o custo e uma rodada de metadata, nao N rodadas
+  const dims = await Promise.all(itens.map(i => medirVideo(i.previewUrl)));
+  return itens.map((item, i) => ({ ...item, ...(dims[i] || {}) }));
 }
 
 export async function fetchPortfolioVideos() {

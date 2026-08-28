@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useIsMobile } from '../hooks/useBreakpoint';
 import { fetchPortfolioVideos } from '../lib/portfolioSources';
-import PortfolioVideoCard from './PortfolioVideoCard';
+import PortfolioGrid from './PortfolioGrid';
 import PortfolioLightbox from './PortfolioLightbox';
 
 export default function PortfolioSection() {
@@ -47,25 +47,17 @@ export default function PortfolioSection() {
       </div>
 
       {loading ? (
-        <div className="columns-1 sm:columns-2 md:columns-3 gap-5">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {[...Array(6)].map((_, i) => (
             <div
               key={i}
-              className="break-inside-avoid mb-5 animate-pulse"
+              className="animate-pulse"
               style={{ background: 'rgba(17,17,17,0.50)', border: '1px solid #222', borderRadius: 24, aspectRatio: i % 3 === 0 ? '16 / 9' : '9 / 16' }}
             />
           ))}
         </div>
       ) : (
-        <div className="columns-1 sm:columns-2 md:columns-3 gap-5">
-          {videos.map((video, index) => (
-            <PortfolioVideoCard
-              key={video.key}
-              video={video}
-              onOpen={() => setLightboxIndex(index)}
-            />
-          ))}
-        </div>
+        <PortfolioGrid videos={videos} onOpen={setLightboxIndex} />
       )}
 
       <PortfolioLightbox

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Clapperboard, Video } from 'lucide-react';
 import { fetchPortfolioVideos } from '../lib/portfolioSources';
-import PortfolioVideoCard from '../components/PortfolioVideoCard';
+import PortfolioGrid from '../components/PortfolioGrid';
 import PortfolioLightbox from '../components/PortfolioLightbox';
 import Footer from '../components/Footer';
 import ScheduleModal from '../components/ScheduleModal';
@@ -105,11 +105,11 @@ export default function Portfolio() {
         </div>
 
         {loading ? (
-          <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {[...Array(8)].map((_, i) => (
               <div
                 key={i}
-                className="break-inside-avoid mb-4 bg-white/5 animate-pulse rounded-2xl w-full"
+                className="bg-white/5 animate-pulse rounded-2xl w-full"
                 style={{ aspectRatio: i % 3 === 0 ? '16 / 9' : '9 / 16' }}
               ></div>
             ))}
@@ -126,15 +126,7 @@ export default function Portfolio() {
           </div>
         ) : (
           <>
-            <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
-              {visibleVideos.map((video, index) => (
-                <PortfolioVideoCard
-                  key={video.key}
-                  video={video}
-                  onOpen={() => openLightbox(index)}
-                />
-              ))}
-            </div>
+            <PortfolioGrid videos={visibleVideos} onOpen={openLightbox} />
 
             {visibleCount < videos.length && (
               <div className="mt-16 text-center">
