@@ -1,3 +1,4 @@
+import SpotlightCard from './ui/SpotlightCard';
 import { ArrowUpRight, Target, Workflow, Clapperboard, Globe, MessagesSquare, CalendarCheck, Check } from 'lucide-react';
 
 const services = [
@@ -40,7 +41,7 @@ export default function Features({ openModal }) {
       </div>
 
       <div className="services-grid ecosystem-grid">
-        <article className="service-card service-crm-featured" id="crm-integrado">
+        <SpotlightCard className="service-card service-crm-featured" id="crm-integrado">
           <div className="crm-card-header">
             <Workflow size={34} strokeWidth={1.4} aria-hidden="true" />
             <span className="crm-difference">NOSSO DIFERENCIAL</span>
@@ -48,22 +49,27 @@ export default function Features({ openModal }) {
           <p className="eyebrow">CRM & AUTOMAÇÃO</p>
           <h3>O que conecta tudo.<br /><span>E faz a diferença.</span></h3>
           <p>Nosso CRM reúne os contatos que chegam pelas campanhas, páginas e redes sociais. Histórico, acompanhamento e agendamentos no mesmo fluxo, para sua equipe saber qual é o próximo passo.</p>
+          <ol className="crm-journey" aria-label="Etapas conectadas pelo CRM">
+            <li><MessagesSquare size={16} aria-hidden="true" /><span>Contato</span></li>
+            <li><Workflow size={16} aria-hidden="true" /><span>Atendimento</span></li>
+            <li><CalendarCheck size={16} aria-hidden="true" /><span>Agenda</span></li>
+          </ol>
           <ul className="crm-benefits">
             {['Contatos e histórico organizados', 'Automações para acompanhar oportunidades', 'Agendamento conectado ao atendimento'].map(item => (
               <li key={item}><Check size={16} aria-hidden="true" />{item}</li>
             ))}
           </ul>
           <button className="crm-card-cta" onClick={openModal}>Quero conectar minha operação <ArrowUpRight size={19} aria-hidden="true" /></button>
-        </article>
+        </SpotlightCard>
 
         {services.map(({ icon: Icon, tag, title, desc, detail, className }) => (
-          <article key={tag} className={`service-card ${className}`}>
+          <SpotlightCard key={tag} className={`service-card ${className}`}>
             <div className="service-symbol"><Icon size={46} strokeWidth={1.2} aria-hidden="true" /><span className="service-index" aria-hidden="true">{tag.split(' / ')[0]}</span></div>
             <p className="eyebrow">{tag}</p>
             <h3>{title}</h3>
             <p>{desc}</p>
             <div className="service-detail">{detail}</div>
-          </article>
+          </SpotlightCard>
         ))}
       </div>
       <div className="ecosystem-footer">

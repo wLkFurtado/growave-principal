@@ -295,3 +295,98 @@ h1.hero-enter { animation-delay: .1s; }.hero-description.hero-enter { animation-
   .ecosystem-grid .service-symbol { height: 88px; }
   .service-crm-featured h3 { font-size: 38px; }
 }
+
+/* Locally authored interactions inspired by the 21st.dev card/button catalog. */
+.spotlight-card { position: relative; isolation: isolate; overflow: hidden; }
+.spotlight-card > :not(.spotlight-surface) { position: relative; z-index: 1; }
+.spotlight-surface {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0;
+  background: radial-gradient(300px circle at var(--spot-x, 50%) var(--spot-y, 35%), #b0f58b1c, transparent 75%);
+  transition: opacity 350ms ease;
+}
+.spotlight-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  background: radial-gradient(210px circle at var(--spot-x, 50%) var(--spot-y, 35%), #c6ffa5bb, transparent 80%);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  transition: opacity 350ms ease;
+}
+.spotlight-card[data-spotlight="active"] > .spotlight-surface,
+.spotlight-card[data-spotlight="active"]::after { opacity: 1; }
+.spotlight-card:focus-within { border-color: #b0f58b; }
+.service-symbol svg { transition: transform 450ms cubic-bezier(.2,.7,.2,1), color 450ms; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .spotlight-card:hover .service-symbol svg { transform: translateY(-5px) rotate(-6deg); color: #b0f58b; }
+}
+.shine-button { position: relative; isolation: isolate; overflow: hidden; }
+.shine-button-content { display: inline-flex; align-items: center; justify-content: center; gap: 22px; position: relative; z-index: 1; }
+.shine-button::before {
+  content: '';
+  position: absolute;
+  inset: -70% -40%;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 38%, #ffffff55 49%, transparent 60%);
+  transform: translateX(-85%);
+}
+.shine-button:is(:hover, :focus-visible)::before { animation: buttonShine 850ms ease-out both; }
+.shine-button:active { transform: translateY(0) scale(.98); }
+@keyframes buttonShine { to { transform: translateX(85%); } }
+.crm-journey {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  list-style: none;
+  margin: 0 0 28px;
+  padding: 0;
+}
+.crm-journey li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 13px 3px;
+  border: 1px solid #b0f58b24;
+  border-radius: 9px;
+  color: #c1d5b8;
+  background: #07130766;
+  font-size: 9px;
+}
+.crm-journey li + li::before {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 1px;
+  right: 100%;
+  top: 50%;
+  background: #b0f58b50;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .service-crm-featured:is(:hover, :focus-within) .crm-journey li { animation: journeyHighlight 1500ms ease both; }
+  .service-crm-featured:is(:hover, :focus-within) .crm-journey li:nth-child(2) { animation-delay: 350ms; }
+  .service-crm-featured:is(:hover, :focus-within) .crm-journey li:nth-child(3) { animation-delay: 700ms; }
+}
+@keyframes journeyHighlight {
+  0%, 100% { border-color: #b0f58b24; background: #07130766; }
+  45% { border-color: #b0f58b; background: #b0f58b20; color: #d5ffc2; box-shadow: 0 0 18px #b0f58b14; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spotlight-surface, .spotlight-card::after, .shine-button::before { display: none; }
+}
+@media (forced-colors: active) {
+  .spotlight-surface, .spotlight-card::after, .shine-button::before { display: none; }
+  .crm-journey li { border-color: CanvasText; }
+}

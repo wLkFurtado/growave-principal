@@ -1,3 +1,4 @@
+import ShineButton from './ui/ShineButton';
 import { ArrowUpRight, ArrowDown, Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -21,7 +22,7 @@ export default function Hero({ openModal }) {
         <h1 id="hero-title" className="hero-enter">Sua próxima<br />grande <span>onda.</span></h1>
         <p className="hero-description hero-enter">Sua marca tem potencial. A gente conecta tráfego, conteúdo e tecnologia para transformar esse potencial em novas oportunidades.</p>
         <div className="hero-actions hero-enter">
-          <button className="action-primary" onClick={openModal}>Vamos crescer juntos <ArrowUpRight size={20} /></button>
+          <ShineButton className="action-primary" onClick={openModal}>Vamos crescer juntos <ArrowUpRight size={20} /></ShineButton>
           <Link className="action-text" to="/portfolio"><Play size={16} /> Conheça nosso trabalho</Link>
         </div>
         <div className="hero-note hero-enter"><span>Consultoria inicial gratuita</span><span>Estratégia feita para o seu negócio</span></div>
