@@ -25,10 +25,14 @@ export default function Comparison() {
   const isMobile = useIsMobile();
 
   useEffect(() => {
+    const motion = gsap.matchMedia();
+    motion.add('(prefers-reduced-motion: no-preference)', () => {
     gsap.from(ref.current.querySelectorAll('.compare-col'), {
       scrollTrigger: { trigger: ref.current, start: 'top 75%' },
       y: 60, opacity: 0, duration: 1, stagger: 0.25, ease: 'power2.out',
     });
+    });
+    return () => motion.revert();
   }, []);
 
   return (

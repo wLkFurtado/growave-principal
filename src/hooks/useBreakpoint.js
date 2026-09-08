@@ -35,13 +35,18 @@ export function useCounter(target, duration) {
     if (!ref.current) return;
     gsap.registerPlugin(ScrollTrigger);
     const obj = { val: 0 };
-    gsap.to(obj, {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setValue(target);
+      return;
+    }
+    const tween = gsap.to(obj, {
       val: target,
       duration: (duration || 1600) / 1000,
       ease: 'power2.out',
       scrollTrigger: { trigger: ref.current, start: 'top 80%', once: true },
       onUpdate: () => setValue(Math.round(obj.val)),
     });
+    return () => { tween.scrollTrigger?.kill(); tween.kill(); };
   }, [target, duration]);
   return [value, ref];
 }

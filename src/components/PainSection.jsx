@@ -5,7 +5,7 @@ import { X } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* eslint-disable react/prop-types */
+
 const PainSection = ({ openModal }) => {
   const ref = useRef(null);
 

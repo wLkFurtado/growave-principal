@@ -1,7 +1,9 @@
+import { useDialogFocus } from '../hooks/useDialogFocus';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useEffect } from 'react';
 
 export default function PortfolioLightbox({ videos, currentIndex, onClose, onNext, onPrev }) {
+  const dialogRef = useDialogFocus(currentIndex !== null);
   // Prevenir scroll do body quando aberto
   useEffect(() => {
     if (currentIndex === null) return;
@@ -36,7 +38,7 @@ export default function PortfolioLightbox({ videos, currentIndex, onClose, onNex
   const isVertical = current.width && current.height ? current.height > current.width : false;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm">
+    <div ref={dialogRef} role="dialog" aria-modal="true" aria-label="Vídeo do portfólio" tabIndex={-1} className="fixed inset-0 z-[200] flex items-center justify-center bg-black/95 backdrop-blur-sm">
       {/* Controles do Topo */}
       <div className="absolute top-0 left-0 right-0 p-4 flex justify-between items-center z-10">
         <span className="text-white/70 font-mono text-sm">
@@ -54,6 +56,7 @@ export default function PortfolioLightbox({ videos, currentIndex, onClose, onNex
       {/* Navegação Esquerda */}
       {currentIndex > 0 && (
         <button
+          aria-label="Anterior"
           onClick={onPrev}
           className="absolute left-4 p-3 text-white/70 hover:text-white bg-white/5 hover:bg-white/20 rounded-full transition-all z-10"
           title="Anterior"
@@ -85,6 +88,7 @@ export default function PortfolioLightbox({ videos, currentIndex, onClose, onNex
       {/* Navegação Direita */}
       {currentIndex < videos.length - 1 && (
         <button
+          aria-label="Próximo"
           onClick={onNext}
           className="absolute right-4 p-3 text-white/70 hover:text-white bg-white/5 hover:bg-white/20 rounded-full transition-all z-10"
           title="Próximo"

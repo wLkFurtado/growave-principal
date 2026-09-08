@@ -25,13 +25,12 @@ export default function Portfolio() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetchVideos();
-  }, []);
-
-  const fetchVideos = async () => {
+    let active = true;
+    const fetchVideos = async () => {
     try {
       setLoading(true);
-      const { videos: encontrados, errors } = await fetchPortfolioVideos();
+      const { videos: encontrados, errors } = await fetchPortfolioVideos(items => { if (active && items.length) { setVideos(items); setLoading(false); } });
+      if (!active) return;
 
       setVideos(encontrados);
       // So mostra erro se NENHUMA fonte respondeu — uma fonte fora do ar nao vira tela de erro
@@ -39,11 +38,15 @@ export default function Portfolio() {
         setError(`Não foi possível carregar os vídeos. ${errors.join(' | ')}`);
       }
     } catch (err) {
-      setError(err.message);
+      if (active) setError(err.message);
     } finally {
-      setLoading(false);
+      if (active) setLoading(false);
     }
   };
+
+    fetchVideos();
+    return () => { active = false; };
+  }, []);
 
   const loadMore = () => setVisibleCount(prev => prev + PAGE_SIZE);
 

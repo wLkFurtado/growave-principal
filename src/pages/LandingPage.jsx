@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
+import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-import CustomCursor from '../components/CustomCursor';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import Stats from '../components/Stats';
@@ -18,20 +18,31 @@ export default function LandingPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    setTimeout(() => { ScrollTrigger.refresh(); }, 100);
+    const timer = setTimeout(() => { ScrollTrigger.refresh(); }, 100);
+    const motion = gsap.matchMedia();
+    motion.add('(prefers-reduced-motion: no-preference)', () => {
+      ['.service-card', '.process-card', '.contact-panel'].forEach(selector => {
+        gsap.utils.toArray(selector).forEach((element, index) => {
+          gsap.from(element, { y: 28, opacity: 0, duration: .7, delay: (index % 3) * .08,
+            ease: 'power2.out', scrollTrigger: { trigger: element, start: 'top 94%', once: true } });
+        });
+      });
+    });
+    return () => { clearTimeout(timer); motion.revert(); };
   }, []);
 
   return (
     <>
-      <CustomCursor />
       <Navbar openModal={() => setIsModalOpen(true)} />
+      <main id="conteudo">
       <Hero openModal={() => setIsModalOpen(true)} />
       <Stats />
-      <Features />
+      <Features openModal={() => setIsModalOpen(true)} />
       <Comparison />
       <Protocol />
       <PortfolioSection />
       <Pricing openModal={() => setIsModalOpen(true)} />
+      </main>
       <Footer />
       <ScheduleModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>

@@ -1,7 +1,9 @@
+import { useDialogFocus } from '../hooks/useDialogFocus';
 import { X, ChevronLeft, ChevronRight, Download } from 'lucide-react';
 import { useEffect } from 'react';
 
 export default function GalleryLightbox({ images, currentIndex, onClose, onNext, onPrev }) {
+  const dialogRef = useDialogFocus(currentIndex !== null);
   // Prevenir scroll do body quando aberto
   useEffect(() => {
     if (currentIndex === null) return;
@@ -45,11 +47,13 @@ export default function GalleryLightbox({ images, currentIndex, onClose, onNext,
   const handleDownload = async () => {
     try {
       const response = await fetch(downloadUrl);
+      if (!response.ok) throw new Error('Download indisponível');
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = `secco-em-casa-${currentImage.public_id}.jpg`;
+      const extension = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp', 'image/avif': 'avif' }[blob.type] || currentImage.format;
+      link.download = `secco-em-casa-${currentImage.public_id.split('/').pop()}.${extension}`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -62,7 +66,7 @@ export default function GalleryLightbox({ images, currentIndex, onClose, onNext,
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm">
+    <div ref={dialogRef} role="dialog" aria-modal="true" aria-label="Galeria de fotos" tabIndex={-1} className="fixed inset-0 z-[200] flex items-center justify-center bg-black/95 backdrop-blur-sm">
       {/* Imagens ocultas para pré-carregamento nativo do navegador */}
       {preloadPrevUrl && <link rel="preload" as="image" href={preloadPrevUrl} />}
       {preloadNextUrl && <link rel="preload" as="image" href={preloadNextUrl} />}
@@ -92,6 +96,7 @@ export default function GalleryLightbox({ images, currentIndex, onClose, onNext,
 
       {/* Navegação Esquerda */}
       <button 
+        aria-label="Anterior"
         onClick={onPrev}
         className="absolute left-4 p-3 text-white/70 hover:text-white bg-white/5 hover:bg-white/20 rounded-full transition-all z-10"
       >
@@ -111,6 +116,7 @@ export default function GalleryLightbox({ images, currentIndex, onClose, onNext,
 
       {/* Navegação Direita */}
       <button 
+        aria-label="Próximo"
         onClick={onNext}
         className="absolute right-4 p-3 text-white/70 hover:text-white bg-white/5 hover:bg-white/20 rounded-full transition-all z-10"
       >

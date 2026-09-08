@@ -1,3 +1,5 @@
+import { fetchWithTimeout } from './request.js';
+
 // Busca os videos do portfolio em duas fontes e normaliza num formato unico.
 //
 // Cloudinary  -> reels curtos. Transcodifica, gera poster e da a listagem por tag.
@@ -14,7 +16,7 @@ const SB_BUCKET = import.meta.env.VITE_SUPABASE_VIDEO_BUCKET;
 async function fetchCloudinary() {
   if (!CLOUD) return [];
 
-  const res = await fetch(`https://res.cloudinary.com/${CLOUD}/video/list/${CLOUD_TAG}.json`);
+  const res = await fetchWithTimeout(`https://res.cloudinary.com/${CLOUD}/video/list/${CLOUD_TAG}.json`);
   // 404 aqui significa "nenhum video com essa tag", nao erro de verdade
   if (res.status === 404) return [];
   if (!res.ok) throw new Error(`Cloudinary respondeu ${res.status}`);
@@ -34,46 +36,23 @@ async function fetchCloudinary() {
   }));
 }
 
-// A listagem do Supabase nao devolve dimensoes, e o grid precisa saber a
-// orientacao antes de renderizar (senao os cards saltam de posicao ao carregar).
-// preload=metadata baixa so o atom moov, alguns KB — nao o video inteiro.
-function medirVideo(url) {
-  return new Promise(resolve => {
-    const v = document.createElement('video');
-    let terminou = false;
-    const done = (dims) => {
-      if (terminou) return;
-      terminou = true;
-      v.removeAttribute('src');
-      v.load();
-      resolve(dims);
-    };
-
-    v.preload = 'metadata';
-    v.muted = true;
-    v.onloadedmetadata = () => done({ width: v.videoWidth, height: v.videoHeight });
-    v.onerror = () => done(null);
-    // Se um arquivo demorar, o grid nao pode ficar refem dele
-    setTimeout(() => done(null), 8000);
-    v.src = url;
-  });
-}
-
 async function fetchSupabase() {
   if (!SB_URL || !SB_KEY || !SB_BUCKET) return [];
 
-  const res = await fetch(`${SB_URL}/storage/v1/object/list/${SB_BUCKET}`, {
-    method: 'POST',
-    headers: {
-      apikey: SB_KEY,
-      Authorization: `Bearer ${SB_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ prefix: '', limit: 100, sortBy: { column: 'created_at', order: 'desc' } }),
-  });
-  if (!res.ok) throw new Error(`Supabase respondeu ${res.status}`);
-
-  const files = await res.json();
+  const files = [];
+  const pageSize = 100;
+  for (let offset = 0; ; offset += pageSize) {
+    const res = await fetchWithTimeout(`${SB_URL}/storage/v1/object/list/${SB_BUCKET}`, {
+      method: 'POST',
+      headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prefix: '', limit: pageSize, offset, sortBy: { column: 'created_at', order: 'desc' } }),
+    });
+    if (!res.ok) throw new Error(`Supabase respondeu ${res.status}`);
+    const page = await res.json();
+    if (!Array.isArray(page)) throw new Error('Listagem de vídeos inválida');
+    files.push(...page);
+    if (page.length < pageSize) break;
+  }
 
   const itens = files
     // Supabase serve o arquivo como esta, sem transcodificar. So aceitamos os
@@ -94,19 +73,24 @@ async function fetchSupabase() {
       };
     });
 
-  // Mede em paralelo — o custo e uma rodada de metadata, nao N rodadas
-  const dims = await Promise.all(itens.map(i => medirVideo(i.previewUrl)));
-  return itens.map((item, i) => ({ ...item, ...(dims[i] || {}) }));
+  return itens;
 }
 
-export async function fetchPortfolioVideos() {
+export async function fetchPortfolioVideos(onProgress) {
+  const collected = [];
+  const publish = items => {
+    collected.push(...items);
+    onProgress?.([...collected]);
+    return items;
+  };
   // allSettled: uma fonte fora do ar nao pode derrubar a outra
-  const results = await Promise.allSettled([fetchCloudinary(), fetchSupabase()]);
+  const results = await Promise.allSettled([fetchCloudinary().then(publish), fetchSupabase().then(publish)]);
 
   const videos = results.flatMap(r => (r.status === 'fulfilled' ? r.value : []));
   const errors = results.filter(r => r.status === 'rejected').map(r => r.reason.message);
 
-  videos.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  // Keep published order stable while a visitor has a video open.
+  videos.splice(0, videos.length, ...collected);
 
   return { videos, errors };
 }

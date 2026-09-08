@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+import { ArrowUpRight } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useIsMobile } from '../hooks/useBreakpoint';
 import { fetchPortfolioVideos } from '../lib/portfolioSources';
@@ -12,7 +14,7 @@ export default function PortfolioSection() {
 
   useEffect(() => {
     let ativo = true;
-    fetchPortfolioVideos()
+    fetchPortfolioVideos(items => { if (ativo && items.length) { setVideos(items); setLoading(false); } })
       .then(({ videos: encontrados }) => { if (ativo) setVideos(encontrados); })
       .catch(() => { /* a home nao mostra erro de portfolio — a secao apenas nao aparece */ })
       .finally(() => { if (ativo) setLoading(false); });
@@ -27,7 +29,7 @@ export default function PortfolioSection() {
   };
 
   // Sem videos e sem carregar, a secao some em vez de deixar um buraco na home
-  if (!loading && videos.length === 0) return null;
+
 
   return (
     <section
@@ -39,10 +41,10 @@ export default function PortfolioSection() {
           / Portfólio Audiovisual
         </div>
         <h2 style={{ fontFamily: 'Bebas Neue', fontSize: 'clamp(36px, 5vw, 56px)', letterSpacing: '0.04em', textTransform: 'uppercase', color: '#EAEAEA', lineHeight: 1.05, maxWidth: 640 }}>
-          Conteúdo que Para o Scroll e Vende.
+          Histórias que merecem ser vistas.
         </h2>
         <p style={{ fontFamily: 'Inter', fontSize: 14, color: '#A1A1AA', lineHeight: 1.7, maxWidth: 560, marginTop: 18 }}>
-          Produções que a Growave criou para marcas reais. Passe o mouse para pré-visualizar, clique para assistir.
+          Um olhar sobre o que criamos. Selecione um projeto para assistir.
         </p>
       </div>
 
@@ -57,9 +59,10 @@ export default function PortfolioSection() {
           ))}
         </div>
       ) : (
-        <PortfolioGrid videos={videos} onOpen={setLightboxIndex} />
+        videos.length ? <PortfolioGrid videos={videos.slice(0, 6)} onOpen={setLightboxIndex} /> : <p className="portfolio-empty">Nosso portfólio está temporariamente indisponível. Fale com a gente para conhecer os projetos.</p>
       )}
 
+      <Link className="action-text portfolio-link" to="/portfolio">Explorar portfólio completo <ArrowUpRight size={19} /></Link>
       <PortfolioLightbox
         videos={videos}
         currentIndex={lightboxIndex}

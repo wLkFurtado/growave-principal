@@ -30,10 +30,14 @@ export default function Stats() {
   const isTablet = useIsTablet();
 
   useEffect(() => {
+    const motion = gsap.matchMedia();
+    motion.add('(prefers-reduced-motion: no-preference)', () => {
     gsap.from(ref.current.querySelectorAll('.stat-item'), {
       scrollTrigger: { trigger: ref.current, start: 'top 80%' },
       y: 40, opacity: 0, duration: 1, stagger: 0.2, ease: 'power3.out',
     });
+    });
+    return () => motion.revert();
   }, []);
 
   return (

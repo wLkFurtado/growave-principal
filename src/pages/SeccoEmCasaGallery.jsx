@@ -1,3 +1,4 @@
+import { fetchWithTimeout } from '../lib/request';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Image as ImageIcon, Camera } from 'lucide-react';
@@ -20,15 +21,12 @@ export default function SeccoEmCasaGallery() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetchImages();
-  }, []);
-
-  const fetchImages = async () => {
+    const fetchImages = async () => {
     try {
       setLoading(true);
       // Cloudinary Client-Side List API
       const url = `https://res.cloudinary.com/${cloudName}/image/list/${tag}.json`;
-      const response = await fetch(url);
+      const response = await fetchWithTimeout(url);
       
       if (!response.ok) {
         throw new Error('Não foi possível carregar as fotos. Verifique se a TAG "secco" foi adicionada às fotos (mesmo que já estejam na pasta) e se o "Resource list" está liberado no Cloudinary.');
@@ -42,6 +40,9 @@ export default function SeccoEmCasaGallery() {
       setLoading(false);
     }
   };
+
+    fetchImages();
+  }, [cloudName]);
 
   const loadMore = () => {
     setVisibleCount(prev => prev + 30);
@@ -125,7 +126,7 @@ export default function SeccoEmCasaGallery() {
         ) : images.length === 0 ? (
           <div className="text-center py-20 bg-white/5 rounded-2xl border border-white/10">
             <ImageIcon className="mx-auto h-12 w-12 text-white/20 mb-4" />
-            <p className="text-white/60 text-lg">Nenhuma foto encontrada com a tag "{tag}".</p>
+            <p className="text-white/60 text-lg">Nenhuma foto encontrada com a tag &quot;{tag}&quot;.</p>
           </div>
         ) : (
           <>
@@ -135,7 +136,9 @@ export default function SeccoEmCasaGallery() {
                 const thumbUrl = `https://res.cloudinary.com/${cloudName}/image/upload/c_limit,w_600,q_auto,f_auto/v${img.version}/${img.public_id}.${img.format}`;
                 
                 return (
-                  <div 
+                  <button
+                    type="button"
+                    aria-label={`Abrir foto ${index + 1}`}
                     key={img.public_id} 
                     className="break-inside-avoid relative group cursor-pointer bg-white/5 rounded-2xl overflow-hidden"
                     onClick={() => openLightbox(index)}
@@ -147,7 +150,7 @@ export default function SeccoEmCasaGallery() {
                       className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  </div>
+                  </button>
                 );
               })}
             </div>

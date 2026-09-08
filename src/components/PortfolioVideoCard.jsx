@@ -1,8 +1,18 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Play } from 'lucide-react';
 
 export default function PortfolioVideoCard({ video, onOpen }) {
   const videoRef = useRef(null);
+  const cardRef = useRef(null);
+  const interacting = useRef(false);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const observer = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) { setVisible(true); observer.disconnect(); }
+    }, { rootMargin: '180px' });
+    observer.observe(cardRef.current);
+    return () => observer.disconnect();
+  }, []);
   // O src do preview so e atribuido no primeiro hover — evita baixar todos os videos no load.
   const [previewSrc, setPreviewSrc] = useState(null);
   const [previewReady, setPreviewReady] = useState(false);
@@ -17,14 +27,17 @@ export default function PortfolioVideoCard({ video, onOpen }) {
   const usaPosterProprio = !video.posterUrl;
 
   const handleEnter = () => {
+    interacting.current = true;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (!previewSrc) {
       setPreviewSrc(video.previewUrl);
-      return; // o autoPlay cuida do play assim que carregar
+      return; // onCanPlay inicia somente se a interação continuar ativa
     }
     videoRef.current?.play().catch(() => {}); // play() rejeita se o mouse sair antes de carregar
   };
 
   const handleLeave = () => {
+    interacting.current = false;
     const el = videoRef.current;
     if (!el) return;
     el.pause();
@@ -37,15 +50,20 @@ export default function PortfolioVideoCard({ video, onOpen }) {
   };
 
   return (
-    <div
+    <button
+      ref={cardRef}
+      type="button"
+      aria-label="Assistir vídeo do portfólio"
       className="relative w-full h-full group cursor-pointer bg-white/5 rounded-2xl overflow-hidden border border-white/5 hover:border-[#4ade80]/40 transition-colors duration-300"
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
+      onFocus={handleEnter}
+      onBlur={handleLeave}
       onClick={onOpen}
     >
       {usaPosterProprio ? (
         <video
-          src={`${video.previewUrl}#t=0.1`} // #t força o browser a pintar o primeiro frame
+          src={visible ? `${video.previewUrl}#t=0.1` : undefined} // #t força o browser a pintar o primeiro frame
           preload="metadata"
           muted
           playsInline
@@ -72,7 +90,7 @@ export default function PortfolioVideoCard({ video, onOpen }) {
           muted
           loop
           playsInline
-          autoPlay
+          onCanPlay={() => { if (interacting.current) videoRef.current?.play().catch(() => {}); }}
           preload="none"
           onLoadedMetadata={lerDimensoes}
           onPlaying={() => setPreviewReady(true)}
@@ -95,6 +113,6 @@ export default function PortfolioVideoCard({ video, onOpen }) {
           </span>
         </div>
       )}
-    </div>
+    </button>
   );
 }
