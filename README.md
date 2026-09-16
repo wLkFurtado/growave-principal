@@ -29,7 +29,7 @@ Variáveis `VITE_*` são públicas no navegador. Use somente a chave pública `a
 
 A configuração da Vercel inclui proteção contra enquadramento externo, bloqueio de objetos e MIME sniffing e política de referência. Não foi aplicada uma lista restritiva de scripts sem validar os domínios exigidos pelo formulário externo.
 
-O link de privacidade leva a um contato real por e-mail. Política de Privacidade e Termos definitivos dependem de conteúdo aprovado pelo responsável pelo negócio; não foram inventados documentos legais.
+O link de privacidade abre `/politica-de-privacidade`, com texto baseado nas integrações identificadas. Antes da publicação, o responsável deve validar identificação jurídica, fornecedores do formulário/CRM, bases legais e prazos de retenção. A criação da página não implementa consentimento de cookies; o Meta Pixel mantém o comportamento existente.
 
 ## Verificação desta entrega
 

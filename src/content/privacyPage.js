@@ -1,0 +1,32 @@
+export const privacyPage = {
+  path: '/politica-de-privacidade',
+  name: 'Política de Privacidade',
+  title: 'Política de Privacidade | Growave',
+  description: 'Saiba quais informações são utilizadas no site da Growave, como funcionam os serviços externos e como entrar em contato sobre seus dados pessoais.',
+  eyebrow: 'PRIVACIDADE E DADOS',
+  heading: 'Política de Privacidade',
+  legal: true,
+  updatedAt: '15 de setembro de 2026',
+  intro: 'Esta política descreve o uso de informações no site da Growave, agência de marketing sediada em Cabo Frio, RJ. Para dúvidas ou solicitações relacionadas a dados pessoais, entre em contato pelo e-mail contato@growave.com.br.',
+  sections: [
+    ['Informações fornecidas por você', 'Ao preencher o formulário de consultoria ou falar conosco por e-mail ou WhatsApp, você fornece as informações solicitadas nesses canais e o conteúdo da sua mensagem. Isso pode incluir nome, telefone, e-mail e informações sobre sua empresa e seu projeto. Evite enviar dados sensíveis ou documentos pessoais que não sejam necessários ao atendimento.'],
+    ['Informações de navegação', 'O acesso ao site e aos recursos externos envolve o envio de informações técnicas, como endereço IP, navegador, dispositivo e endereço da página solicitada, aos servidores que entregam esses recursos. O site também utiliza o Meta Pixel para registrar visualizações de página e apoiar a mensuração de publicidade.'],
+    ['Finalidades e fundamentos do tratamento', 'As informações enviadas em uma solicitação são utilizadas para compreender a demanda, responder, organizar o atendimento e conversar sobre uma eventual contratação. Procedimentos preliminares a um contrato solicitados pelo titular podem fundamentar esse atendimento. Outros usos devem ter uma hipótese legal aplicável à sua finalidade, como cumprimento de obrigação legal ou consentimento, quando exigido. O simples acesso ao site não deve ser interpretado como consentimento genérico para qualquer tratamento de dados.'],
+    ['Meta Pixel, cookies e publicidade', 'O Meta Pixel é uma ferramenta da Meta integrada ao site e carregada no acesso à página. Ele pode utilizar cookies e outras tecnologias para associar informações de navegação à mensuração de anúncios. A Meta trata informações segundo suas próprias políticas. Você pode consultar as opções de privacidade da sua conta Meta e as configurações de cookies do navegador. Essas opções não desfazem automaticamente informações já transmitidas. O site ainda não oferece um painel próprio de preferências de cookies.'],
+    ['Formulário e serviços externos', 'O formulário é disponibilizado pelo domínio link.growave.com.br. Sua abertura carrega conteúdo e um script desse serviço; o envio dos campos ocorre por meio dessa integração. Imagens e vídeos podem ser entregues pelo Cloudinary e pelo Supabase, fontes pelo Google Fonts e as páginas pela hospedagem Vercel. Esses serviços recebem as informações técnicas necessárias às respectivas requisições. Ao seguir links para WhatsApp, Instagram ou Facebook, você também passa a interagir com os serviços desses fornecedores.'],
+    ['Compartilhamento e processamento internacional', 'As integrações descritas envolvem fornecedores de hospedagem, mídia, formulário, comunicação e publicidade. Conforme a infraestrutura de cada fornecedor, informações podem ser processadas fora do Brasil. Você pode solicitar esclarecimentos à Growave sobre os fornecedores envolvidos em seu atendimento e sobre as condições aplicáveis ao tratamento dos seus dados.'],
+    ['Conservação e segurança', 'Os períodos de conservação podem variar conforme a finalidade, o relacionamento comercial, as obrigações aplicáveis e o serviço utilizado. Esta página não estabelece um prazo único para todos os registros. Para saber sobre os dados vinculados ao seu atendimento ou solicitar sua eliminação, use o canal de privacidade. Nenhum sistema é inteiramente isento de riscos; evite compartilhar senhas ou dados desnecessários nos canais de contato.'],
+    ['Seus direitos', 'Nos termos da LGPD e conforme as condições legais de cada pedido, você pode solicitar confirmação do tratamento, acesso, correção, informações sobre compartilhamento, anonimização, bloqueio ou eliminação de dados desnecessários, excessivos ou tratados em desconformidade. Também pode solicitar portabilidade, quando aplicável, revogar consentimento e pedir eliminação de dados tratados com essa base, observadas as exceções legais. É possível apresentar petição à Autoridade Nacional de Proteção de Dados.'],
+    ['Como fazer uma solicitação', 'Envie sua solicitação para contato@growave.com.br, preferencialmente com o assunto “Privacidade e dados”, indicando o que deseja e o canal pelo qual teve contato com a Growave. Para proteger seus dados, pode ser necessário confirmar sua identidade antes de fornecer informações ou executar o pedido. Não envie documentos sensíveis no primeiro contato.'],
+    ['Atualizações desta política', 'Esta página pode ser atualizada para refletir alterações no site, nas integrações ou nas informações sobre o tratamento. A data de atualização aparece no início do documento. Dúvidas sobre esta versão podem ser encaminhadas ao canal de privacidade.'],
+  ],
+  faq: [
+    ['Como entro em contato sobre meus dados?', 'Escreva para contato@growave.com.br com o assunto “Privacidade e dados” e descreva sua solicitação.'],
+    ['Posso solicitar a exclusão dos meus dados?', 'Você pode encaminhar o pedido pelo canal de privacidade. A aplicação da exclusão depende da finalidade, da base legal e de eventuais obrigações de conservação.'],
+  ],
+  references: [
+    ['Lei Geral de Proteção de Dados (LGPD)', 'https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709compilado.htm'],
+    ['Política de Privacidade da Meta', 'https://www.facebook.com/privacy/policy/'],
+    ['Autoridade Nacional de Proteção de Dados', 'https://www.gov.br/anpd/pt-br'],
+  ],
+};

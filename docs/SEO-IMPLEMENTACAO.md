@@ -58,3 +58,9 @@ O portfólio continua acessível. Não foram criados cases ou números sem compr
 - OpenAI, rastreadores: https://developers.openai.com/api/docs/bots
 
 Permitir rastreamento, gerar sitemap e adicionar schema não garantem indexação, posições, resultados enriquecidos ou menção em respostas de IA.
+
+## Política de Privacidade
+
+Criada em `/politica-de-privacidade`, ligada aos rodapés do site e da página comercial de CRM, incluída no sitemap e gerada em HTML estático. O texto descreve o formulário externo, o Meta Pixel e as integrações observadas, com canal de contato para titulares.
+
+Antes de publicar, o responsável deve confirmar razão social/CNPJ e endereço do controlador, o fornecedor efetivo do formulário/CRM, bases legais para cada finalidade, regras de conservação e condições de processamento internacional. Não foram inventadas essas informações. O texto não afirma que há consentimento de cookies: o Meta Pixel continua carregando no acesso à página, e implementar gestão de consentimento é um trabalho separado.

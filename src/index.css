@@ -427,3 +427,11 @@ h1.hero-enter { animation-delay: .1s; }.hero-description.hero-enter { animation-
   .content-intro { padding: 40px 0; }
   .content-intro > p:not(.eyebrow) { font-size: 14px; }
 }
+
+.privacy-page { max-width: 960px; }
+.privacy-page .content-sections { grid-template-columns: 1fr; gap: 0; }
+.privacy-page .content-sections section { padding: 30px 0; background: transparent; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; }
+.privacy-page .content-intro .policy-date { font-size: 12px; color: #a5aaa5; }
+.policy-references { padding-bottom: 36px; }
+.policy-references h2 { font: 30px 'Bebas Neue'; margin-bottom: 20px; }
+.policy-references a { display: block; width: fit-content; margin: 14px 0; font-size: 13px; color: var(--green); text-decoration: underline; text-underline-offset: 4px; }

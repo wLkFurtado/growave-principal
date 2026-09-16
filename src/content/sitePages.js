@@ -1,3 +1,4 @@
+import { privacyPage } from './privacyPage.js';
 export const siteUrl = 'https://www.growave.com.br';
 export const organization = {
   '@context': 'https://schema.org', '@type': ['Organization', 'LocalBusiness'],
@@ -54,6 +55,7 @@ export const services = [
   ], [['Funciona para clínicas e prestadores de serviços?', 'O serviço pode ser avaliado para operações que trabalham com horários. A implantação depende das regras de agenda, dos canais e das integrações de cada negócio.'], ['Os lembretes garantem que o cliente compareça?', 'Não. Eles apoiam a comunicação e o acompanhamento, mas o comparecimento depende do cliente e de outros fatores.']]),
 ];
 export const pages = [
+  privacyPage,
   ...services,
   { path: '/agencia-de-marketing-em-cabo-frio', name: 'Marketing em Cabo Frio', title: 'Agência de Marketing em Cabo Frio | Growave', eyebrow: 'CABO FRIO · RIO DE JANEIRO', heading: 'Agência de marketing em Cabo Frio', description: 'Conheça a Growave, agência de marketing em Cabo Frio: tráfego pago, social media, landing pages, audiovisual e CRM integrados.', intro: 'Somos a Growave, uma agência de marketing sediada em Cabo Frio, RJ. Conectamos estratégia, conteúdo e tecnologia para apoiar empresas da cidade e de todo o Brasil.', sections: [
     ['Estratégia para a realidade do seu negócio', 'Antes de escolher canais, buscamos entender a oferta, o público, a rotina de atendimento e os objetivos da empresa. Esse diagnóstico orienta as prioridades de comunicação e geração de oportunidades.'],
