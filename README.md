@@ -34,3 +34,9 @@ O link de privacidade leva a um contato real por e-mail. Política de Privacidad
 ## Verificação desta entrega
 
 Build, lint e quatro testes automatizados aprovados. A atualização das dependências retornou zero vulnerabilidades na consulta npm. O layout inclui regras responsivas e suporte a movimento reduzido, mas a inspeção visual em navegador e a submissão do formulário externo não foram realizadas neste ambiente. Antes de publicar, confira a home, o menu mobile, as galerias, o agendamento e os cabeçalhos na hospedagem real.
+
+## Páginas editoriais e SEO
+
+`src/content/sitePages.js` concentra o conteúdo dos seis serviços, da página de Cabo Frio, de Sobre e das perguntas frequentes. `npm run build` gera essas nove páginas como HTML completo com `scripts/build-seo.mjs`, além de sitemap e 404. A navegação em desenvolvimento usa as mesmas páginas React; em produção, a Vercel entrega os arquivos estáticos com URLs sem `.html`.
+
+`npm test` executa o build antes dos testes para validar os artefatos reais, metadados, schema, sitemap e configuração de rotas. O arquivo `docs/SEO-IMPLEMENTACAO.md` registra o que foi implementado e os passos ainda dependentes de publicação, Search Console, Perfil da Empresa e dados de cases.

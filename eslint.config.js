@@ -5,7 +5,7 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 
 export default [
-  { files: ['tests/**/*.js'], languageOptions: { globals: globals.node } },
+  { files: ['tests/**/*.js', 'scripts/**/*.mjs'], languageOptions: { globals: globals.node } },
   { ignores: ['dist/**', 'node_modules/**'] },
   {
     files: ['**/*.{js,jsx}'],

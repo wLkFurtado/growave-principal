@@ -5,27 +5,27 @@ const services = [
   {
     icon: Target, tag: '01 / TRÁFEGO PAGO', title: 'Sua marca no lugar certo.',
     desc: 'Campanhas para alcançar quem procura o que você oferece e transformar atenção em oportunidades comerciais.',
-    detail: 'META ADS · GOOGLE ADS', className: 'service-ads',
+    detail: 'META ADS · GOOGLE ADS', path: '/servicos/trafego-pago', className: 'service-ads',
   },
   {
     icon: Clapperboard, tag: '02 / AUDIOVISUAL', title: 'Conteúdo que faz sentir.',
     desc: 'Direção criativa, filmagem e edição para mostrar o que torna sua marca única, do primeiro frame à mensagem final.',
-    detail: 'FILMAGEM · REELS · CAMPANHAS', className: 'service-film',
+    detail: 'FILMAGEM · REELS · CAMPANHAS', path: '/servicos/audiovisual', className: 'service-film',
   },
   {
     icon: MessagesSquare, tag: '03 / SOCIAL MEDIA', title: 'Presença que cria conexão.',
     desc: 'Planejamento editorial, design e conteúdo com a voz da sua marca. Uma presença consistente para construir relacionamento e manter sua empresa na conversa.',
-    detail: 'ESTRATÉGIA · CONTEÚDO · DESIGN', className: 'service-social',
+    detail: 'ESTRATÉGIA · CONTEÚDO · DESIGN', path: '/servicos/social-media', className: 'service-social',
   },
   {
     icon: Globe, tag: '04 / LANDING PAGES', title: 'Cada clique, um próximo passo.',
     desc: 'Páginas rápidas e adaptadas ao celular, com mensagem clara e chamadas para ação. Da campanha ao formulário, uma experiência conectada ao seu CRM.',
-    detail: 'COPY · DESIGN · CONVERSÃO', className: 'service-pages',
+    detail: 'COPY · DESIGN · CONVERSÃO', path: '/servicos/landing-pages', className: 'service-pages',
   },
   {
     icon: CalendarCheck, tag: '05 / AGENDAMENTO INTELIGENTE', title: 'Da conversa para a agenda.',
     desc: 'Agendamentos integrados ao CRM, com organização dos contatos, confirmações e lembretes automáticos. Menos tarefas repetitivas para sua equipe, mais atenção para cada cliente.',
-    detail: 'AGENDA · CONFIRMAÇÃO · LEMBRETES', className: 'service-scheduling',
+    detail: 'AGENDA · CONFIRMAÇÃO · LEMBRETES', path: '/servicos/agendamento-inteligente', className: 'service-scheduling',
   },
 ];
 
@@ -59,16 +59,18 @@ export default function Features({ openModal }) {
               <li key={item}><Check size={16} aria-hidden="true" />{item}</li>
             ))}
           </ul>
+          <a className="service-page-link" href="/servicos/crm-e-automacao">Conhecer CRM e automação <ArrowUpRight size={16} aria-hidden="true" /></a>
           <button className="crm-card-cta" onClick={openModal}>Quero conectar minha operação <ArrowUpRight size={19} aria-hidden="true" /></button>
         </SpotlightCard>
 
-        {services.map(({ icon: Icon, tag, title, desc, detail, className }) => (
+        {services.map(({ icon: Icon, tag, title, desc, detail, className, path }) => (
           <SpotlightCard key={tag} className={`service-card ${className}`}>
             <div className="service-symbol"><Icon size={46} strokeWidth={1.2} aria-hidden="true" /><span className="service-index" aria-hidden="true">{tag.split(' / ')[0]}</span></div>
             <p className="eyebrow">{tag}</p>
             <h3>{title}</h3>
             <p>{desc}</p>
             <div className="service-detail">{detail}</div>
+            <a className="service-page-link" href={path}>Conhecer o serviço <ArrowUpRight size={16} aria-hidden="true" /></a>
           </SpotlightCard>
         ))}
       </div>

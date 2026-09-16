@@ -1,11 +1,11 @@
 {
   "rewrites": [
     {
-      "source": "/crm",
-      "destination": "/crm.html"
+      "source": "/portfolio",
+      "destination": "/index.html"
     },
     {
-      "source": "/(.*)",
+      "source": "/secco-em-casa",
       "destination": "/index.html"
     }
   ],
@@ -31,5 +31,10 @@
         }
       ]
     }
-  ]
+  ],
+  "framework": null,
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "cleanUrls": true,
+  "trailingSlash": false
 }

@@ -1,3 +1,6 @@
+import ContentPage from './pages/ContentPage';
+import RouteMetadata from './components/RouteMetadata';
+import { pages } from './content/sitePages';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -12,7 +15,9 @@ gsap.registerPlugin(ScrollTrigger);
 function App() {
   return (
     <Router>
+      <RouteMetadata />
       <Routes>
+        {pages.map(page => <Route key={page.path} path={page.path} element={<ContentPage page={page} />} />)}
         <Route path="/" element={<LandingPage />} />
         <Route path="/secco-em-casa" element={<SeccoEmCasaGallery />} />
         <Route path="/crm" element={<Crm />} />

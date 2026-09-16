@@ -1,3 +1,4 @@
+import Faq from '../components/Faq';
 import { useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -41,6 +42,7 @@ export default function LandingPage() {
       <Comparison />
       <Protocol />
       <PortfolioSection />
+      <Faq />
       <Pricing openModal={() => setIsModalOpen(true)} />
       </main>
       <Footer />
