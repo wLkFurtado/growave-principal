@@ -9,6 +9,13 @@
       "destination": "/index.html"
     }
   ],
+  "redirects": [
+    {
+      "source": "/servicos/landing-pages",
+      "destination": "/servicos/criacao-de-sites",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",

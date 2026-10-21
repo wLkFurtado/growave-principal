@@ -1,5 +1,5 @@
 import SpotlightCard from './ui/SpotlightCard';
-import { ArrowUpRight, Target, Workflow, Clapperboard, Globe, MessagesSquare, CalendarCheck, Check } from 'lucide-react';
+import { ArrowUpRight, Target, Workflow, Clapperboard, Monitor, MapPinned, MessagesSquare, CalendarCheck, Check } from 'lucide-react';
 
 const services = [
   {
@@ -18,12 +18,17 @@ const services = [
     detail: 'ESTRATÉGIA · CONTEÚDO · DESIGN', path: '/servicos/social-media', className: 'service-social',
   },
   {
-    icon: Globe, tag: '04 / LANDING PAGES', title: 'Cada clique, um próximo passo.',
-    desc: 'Páginas rápidas e adaptadas ao celular, com mensagem clara e chamadas para ação. Da campanha ao formulário, uma experiência conectada ao seu CRM.',
-    detail: 'COPY · DESIGN · CONVERSÃO', path: '/servicos/landing-pages', className: 'service-pages',
+    icon: Monitor, tag: '04 / SITES E LANDING PAGES', title: 'Sua marca na web, do jeito certo.',
+    desc: 'Do site institucional que apresenta sua empresa à página de campanha focada em uma ação. Estrutura clara, leitura no celular e formulários ligados ao seu CRM.',
+    detail: 'SITE · LANDING PAGE · DOMÍNIO', path: '/servicos/criacao-de-sites', className: 'service-pages service-wide',
   },
   {
-    icon: CalendarCheck, tag: '05 / AGENDAMENTO INTELIGENTE', title: 'Da conversa para a agenda.',
+    icon: MapPinned, tag: '05 / ECOSSISTEMA GOOGLE', title: 'Achado por quem procura perto.',
+    desc: 'Perfil da Empresa no Google, Maps e avaliações organizados, com Analytics, Search Console e Tags configurados para medir o que acontece depois do clique.',
+    detail: 'MEU NEGÓCIO · ANALYTICS · SEARCH CONSOLE', path: '/servicos/ecossistema-google', className: 'service-google service-wide',
+  },
+  {
+    icon: CalendarCheck, tag: '06 / AGENDAMENTO INTELIGENTE', title: 'Da conversa para a agenda.',
     desc: 'Agendamentos integrados ao CRM, com organização dos contatos, confirmações e lembretes automáticos. Menos tarefas repetitivas para sua equipe, mais atenção para cada cliente.',
     detail: 'AGENDA · CONFIRMAÇÃO · LEMBRETES', path: '/servicos/agendamento-inteligente', className: 'service-scheduling',
   },

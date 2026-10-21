@@ -285,6 +285,11 @@ h1.hero-enter { animation-delay: .1s; }.hero-description.hero-enter { animation-
 .service-scheduling .service-symbol { color: #b0f58b; }
 .service-social { background: #151914; }
 .service-pages { background: #111918; }
+.service-sites { background: #12181c; }
+.service-google { background: #171519; }
+/* 8 cards numa grade de 3 colunas deixariam uma celula vazia na ultima linha;
+   o card largo fecha 9 celulas em 3 linhas. So vale onde ha 3 colunas. */
+@media (min-width: 1101px) { .ecosystem-grid .service-wide { grid-column: span 2; } }
 .ecosystem-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; padding-top: 28px; }
 .ecosystem-footer p { color: var(--muted); font-size: 12px; line-height: 1.7; }
 .ecosystem-footer .action-text { color: var(--green); }
