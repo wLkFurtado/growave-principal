@@ -48,8 +48,31 @@ export default function Protocol() {
       <div className="process-grid">
         {steps.map(({ id, icon: Icon, tag, title, desc }) => (
           <SpotlightCard className="process-card" key={id}>
-            <span className="process-progress-track" aria-hidden="true">
-              <span className="process-progress-fill" />
+            <span
+              className="process-progress-track"
+              aria-hidden="true"
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                display: 'block',
+                height: '2px',
+                maxHeight: '2px',
+                overflow: 'hidden',
+                pointerEvents: 'none',
+                zIndex: 2,
+              }}
+            >
+              <span
+                className="process-progress-fill"
+                style={{
+                  display: 'block',
+                  width: '100%',
+                  height: '2px',
+                  maxHeight: '2px',
+                }}
+              />
             </span>
             <div className="process-top">
               <span>{id}</span>
