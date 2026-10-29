@@ -1,7 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { forwardRef, useEffect, useRef } from 'react';
 
 // Pointer light is decorative. Content and focus order remain native.
-export default function SpotlightCard({ children, className = '', ...props }) {
+const SpotlightCard = forwardRef(function SpotlightCard({ children, className = '', ...props }, ref) {
   const frame = useRef(null);
   const motionAllowed = useRef(false);
   useEffect(() => {
@@ -31,9 +31,12 @@ export default function SpotlightCard({ children, className = '', ...props }) {
   };
 
   return (
-    <article {...props} className={`spotlight-card ${className}`} onPointerMove={move} onPointerLeave={reset} onPointerCancel={reset}>
+    <article ref={ref} {...props} className={`spotlight-card ${className}`} onPointerMove={move} onPointerLeave={reset} onPointerCancel={reset}>
       <span className="spotlight-surface" aria-hidden="true" />
       {children}
     </article>
   );
-}
+});
+
+export default SpotlightCard;
+

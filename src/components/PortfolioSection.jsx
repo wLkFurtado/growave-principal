@@ -1,13 +1,11 @@
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { useIsMobile } from '../hooks/useBreakpoint';
 import { fetchPortfolioVideos } from '../lib/portfolioSources';
 import PortfolioGrid from './PortfolioGrid';
 import PortfolioLightbox from './PortfolioLightbox';
 
 export default function PortfolioSection() {
-  const isMobile = useIsMobile();
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [lightboxIndex, setLightboxIndex] = useState(null);
@@ -28,24 +26,14 @@ export default function PortfolioSection() {
     if (lightboxIndex !== null && lightboxIndex > 0) setLightboxIndex(lightboxIndex - 1);
   };
 
-  // Sem videos e sem carregar, a secao some em vez de deixar um buraco na home
-
-
   return (
-    <section
-      id="portfólio"
-      style={{ padding: isMobile ? '72px 20px' : '100px 40px', maxWidth: 1200, margin: '0 auto' }}
-    >
-      <div style={{ marginBottom: 56 }}>
-        <div style={{ fontFamily: 'JetBrains Mono', fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#4AFF5A', marginBottom: 16 }}>
-          / Portfólio Audiovisual
+    <section id="portfólio" className="portfolio-home-section">
+      <div className="section-heading">
+        <div>
+          <p className="eyebrow">04 / PORTFÓLIO AUDIOVISUAL</p>
+          <h2>Histórias que merecem<br /><span>ser vistas.</span></h2>
         </div>
-        <h2 style={{ fontFamily: 'Bebas Neue', fontSize: 'clamp(36px, 5vw, 56px)', letterSpacing: '0.04em', textTransform: 'uppercase', color: '#EAEAEA', lineHeight: 1.05, maxWidth: 640 }}>
-          Histórias que merecem ser vistas.
-        </h2>
-        <p style={{ fontFamily: 'Inter', fontSize: 14, color: '#A1A1AA', lineHeight: 1.7, maxWidth: 560, marginTop: 18 }}>
-          Um olhar sobre o que criamos. Selecione um projeto para assistir.
-        </p>
+        <p>Um olhar sobre o que criamos para marcas que precisam parar o scroll. Passe o mouse para pré-visualizar ou selecione para assistir.</p>
       </div>
 
       {loading ? (
@@ -54,7 +42,7 @@ export default function PortfolioSection() {
             <div
               key={i}
               className="animate-pulse"
-              style={{ background: 'rgba(17,17,17,0.50)', border: '1px solid #222', borderRadius: 24, aspectRatio: i % 3 === 0 ? '16 / 9' : '9 / 16' }}
+              style={{ background: '#101410', border: '1px solid var(--line)', borderRadius: 18, aspectRatio: i % 3 === 0 ? '16 / 9' : '9 / 16' }}
             />
           ))}
         </div>
@@ -73,3 +61,4 @@ export default function PortfolioSection() {
     </section>
   );
 }
+

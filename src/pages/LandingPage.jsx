@@ -7,6 +7,7 @@ import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import Stats from '../components/Stats';
 import Features from '../components/Features';
+import FlowSection from '../components/FlowSection';
 import Comparison from '../components/Comparison';
 import Protocol from '../components/Protocol';
 import PortfolioSection from '../components/PortfolioSection';
@@ -22,10 +23,25 @@ export default function LandingPage() {
     const timer = setTimeout(() => { ScrollTrigger.refresh(); }, 100);
     const motion = gsap.matchMedia();
     motion.add('(prefers-reduced-motion: no-preference)', () => {
-      ['.service-card', '.process-card', '.contact-panel'].forEach(selector => {
+      gsap.utils.toArray('.section-heading').forEach(heading => {
+        gsap.from(heading, {
+          y: 24,
+          opacity: 0,
+          duration: 0.75,
+          ease: 'power2.out',
+          scrollTrigger: { trigger: heading, start: 'top 88%', once: true },
+        });
+      });
+      ['.service-card', '.process-card', '.contact-panel', '.faq-item'].forEach(selector => {
         gsap.utils.toArray(selector).forEach((element, index) => {
-          gsap.from(element, { y: 28, opacity: 0, duration: .7, delay: (index % 3) * .08,
-            ease: 'power2.out', scrollTrigger: { trigger: element, start: 'top 94%', once: true } });
+          gsap.from(element, {
+            y: 28,
+            opacity: 0,
+            duration: 0.7,
+            delay: (index % 3) * 0.08,
+            ease: 'power2.out',
+            scrollTrigger: { trigger: element, start: 'top 94%', once: true },
+          });
         });
       });
     });
@@ -39,6 +55,7 @@ export default function LandingPage() {
       <Hero openModal={() => setIsModalOpen(true)} />
       <Stats />
       <Features openModal={() => setIsModalOpen(true)} />
+      <FlowSection openModal={() => setIsModalOpen(true)} />
       <Comparison />
       <Protocol />
       <PortfolioSection />

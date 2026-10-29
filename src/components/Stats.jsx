@@ -1,66 +1,79 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useIsMobile, useIsTablet, useCounter } from '../hooks/useBreakpoint';
+import { useCounter } from '../hooks/useBreakpoint';
+import SpotlightCard from './ui/SpotlightCard';
 
 gsap.registerPlugin(ScrollTrigger);
 
-function AnimatedStat({ num, suffix, title, sub }) {
+function AnimatedStat({ num, suffix, title, sub, tag }) {
   const [count, ref] = useCounter(num, 1600);
-  const isMobile = useIsMobile();
+  const progress = num > 0 ? Math.min(100, Math.round((count / num) * 100)) : 100;
+
   return (
-    <div ref={ref} className="stat-item" style={{
-      borderLeft: isMobile ? 'none' : '1px solid #222',
-      borderTop: isMobile ? '1px solid #222' : 'none',
-      paddingLeft: isMobile ? 0 : 48,
-      paddingTop: isMobile ? 32 : 0,
-    }}>
-      <div style={{ fontFamily: 'Bebas Neue', fontSize: 80, color: '#EAEAEA', lineHeight: 1, letterSpacing: '0.04em' }}>
-        {count}{suffix}
+    <SpotlightCard ref={ref} className="stat-item stat-card">
+      <div className="stat-card-top">
+        <span className="eyebrow">{tag}</span>
+        <span className="stat-live-dot" aria-hidden="true" />
       </div>
-      <div style={{ fontFamily: 'Bebas Neue', fontSize: 18, color: '#4AFF5A', letterSpacing: '0.08em', textTransform: 'uppercase', marginTop: 8 }}>{title}</div>
-      <p style={{ fontFamily: 'Inter', fontSize: 13, color: '#A1A1AA', marginTop: 6, lineHeight: 1.6 }}>{sub}</p>
-    </div>
+      <div className="stat-number">
+        {count}<span>{suffix}</span>
+      </div>
+      <div className="stat-bar" aria-hidden="true">
+        <span className="stat-bar-fill" style={{ '--stat-progress': `${progress}%` }} />
+      </div>
+      <div className="stat-title">{title}</div>
+      <p className="stat-sub">{sub}</p>
+    </SpotlightCard>
   );
 }
 
 export default function Stats() {
   const ref = useRef(null);
-  const isMobile = useIsMobile();
-  const isTablet = useIsTablet();
 
   useEffect(() => {
     const motion = gsap.matchMedia();
     motion.add('(prefers-reduced-motion: no-preference)', () => {
-    gsap.from(ref.current.querySelectorAll('.stat-item'), {
-      scrollTrigger: { trigger: ref.current, start: 'top 80%' },
-      y: 40, opacity: 0, duration: 1, stagger: 0.2, ease: 'power3.out',
-    });
+      gsap.from(ref.current.querySelectorAll('.stat-item'), {
+        scrollTrigger: { trigger: ref.current, start: 'top 82%', once: true },
+        y: 34,
+        opacity: 0,
+        duration: 0.85,
+        stagger: 0.14,
+        ease: 'power3.out',
+      });
     });
     return () => motion.revert();
   }, []);
 
   return (
-    <section ref={ref} style={{
-      background: '#030303', borderTop: '1px solid #222', borderBottom: '1px solid #222',
-      padding: isMobile ? '60px 24px' : '80px 40px',
-    }}>
-      <div style={{
-        maxWidth: 1100, margin: '0 auto', display: 'grid',
-        gridTemplateColumns: isMobile ? '1fr' : isTablet ? '1fr 1fr' : 'repeat(3, 1fr)',
-        gap: isMobile ? 40 : 0,
-      }}>
-        <div className="stat-item" style={{ paddingRight: 48 }}>
-          <div style={{ fontFamily: 'Bebas Neue', fontSize: 64, color: '#4AFF5A', lineHeight: 1, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-            Números<br />Que Falam
+    <section ref={ref} className="stats-section" aria-label="Indicadores da Growave">
+      <div className="stats-grid">
+        <div className="stat-item stat-intro">
+          <p className="eyebrow">TRAÇÃO REAL</p>
+          <div className="stat-heading">
+            Números<br /><span>Que Falam.</span>
           </div>
-          <p style={{ fontFamily: 'Inter', fontSize: 13, color: '#A1A1AA', marginTop: 12, lineHeight: 1.6, maxWidth: 260 }}>
-            Resultados que refletem o compromisso e o avanço contínuo da Growave.
+          <p className="stat-lead">
+            Resultados que refletem o compromisso e o avanço contínuo da Growave em operações reais.
           </p>
         </div>
-        <AnimatedStat num={40} suffix="+" title="Empresas Escaladas" sub="Negócios e marcas transformadas em todo o Brasil." />
-        <AnimatedStat num={6} suffix=" Anos" title="De Experiência" sub="Tração real, engenharia de vendas e marketing de resultados." />
+        <AnimatedStat
+          tag="ALCANCE NACIONAL"
+          num={40}
+          suffix="+"
+          title="Empresas Escaladas"
+          sub="Negócios e marcas transformadas com tráfego, audiovisual e CRM em todo o Brasil."
+        />
+        <AnimatedStat
+          tag="MATURIDADE DE CAMPO"
+          num={6}
+          suffix=" Anos"
+          title="De Experiência"
+          sub="Tração real, engenharia de vendas e marketing orientado a oportunidades comerciais."
+        />
       </div>
     </section>
   );
 }
+
