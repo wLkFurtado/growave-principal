@@ -1,30 +1,9 @@
 import ShineButton from './ui/ShineButton';
+import HeroWaveStage from './HeroWaveStage';
 import { ArrowUpRight, ArrowDown, Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function Hero({ openModal }) {
-  const moveBrand = event => {
-    if (!window.matchMedia('(hover: hover) and (prefers-reduced-motion: no-preference)').matches) return;
-    const bounds = event.currentTarget.getBoundingClientRect();
-    const x = (event.clientX - bounds.left) / bounds.width - 0.5;
-    const y = (event.clientY - bounds.top) / bounds.height - 0.5;
-    const el = event.currentTarget;
-    el.style.setProperty('--brand-x', `${(x * 7).toFixed(2)}deg`);
-    el.style.setProperty('--brand-y', `${(-y * 7).toFixed(2)}deg`);
-    el.style.setProperty('--brand-shift-x', `${(x * 22).toFixed(2)}px`);
-    el.style.setProperty('--brand-shift-y', `${(y * 18).toFixed(2)}px`);
-    el.style.setProperty('--hero-spot-x', `${((x + 0.5) * 100).toFixed(1)}%`);
-    el.style.setProperty('--hero-spot-y', `${((y + 0.5) * 100).toFixed(1)}%`);
-    el.dataset.interactive = 'true';
-  };
-  const resetBrand = event => {
-    const el = event.currentTarget;
-    el.style.setProperty('--brand-x', '0deg');
-    el.style.setProperty('--brand-y', '0deg');
-    el.style.setProperty('--brand-shift-x', '0px');
-    el.style.setProperty('--brand-shift-y', '0px');
-    delete el.dataset.interactive;
-  };
   return (
     <section className="hero-v2" aria-labelledby="hero-title">
       <div className="hero-content">
@@ -56,20 +35,7 @@ export default function Hero({ openModal }) {
         </div>
         <div className="hero-note hero-enter"><span>Consultoria inicial gratuita</span><span>Estratégia feita para o seu negócio</span></div>
       </div>
-      <div className="hero-art hero-logo-art hero-enter" aria-hidden="true" onPointerMove={moveBrand} onPointerLeave={resetBrand}>
-        <span className="hero-art-aura" />
-        <div className="brand-depth">
-          <div className="brand-composition">
-            <div className="brand-symbol-crop">
-              <img src="/assets/growave-brand-hero.jpg" alt="" width="1600" height="1600" fetchPriority="high" />
-            </div>
-            <div className="brand-wordmark-crop">
-              <img src="/assets/growave-brand-hero.jpg" alt="" width="1600" height="1600" />
-            </div>
-            <p className="brand-signature">ESTRATÉGIA EM MOVIMENTO.</p>
-          </div>
-        </div>
-      </div>
+      <HeroWaveStage />
       <div className="hero-bottom">
         <a href="#soluções" className="hero-scroll-link">
           Explore o ecossistema
@@ -80,4 +46,5 @@ export default function Hero({ openModal }) {
     </section>
   );
 }
+
 
