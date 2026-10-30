@@ -7,9 +7,9 @@ import SpotlightCard from './ui/SpotlightCard';
 gsap.registerPlugin(ScrollTrigger);
 
 const steps = [
-  { id: '01', icon: Search, tag: 'DIAGNÓSTICO', title: 'Primeiro, entendemos.', desc: 'Mergulhamos no seu negócio, identificamos oportunidades e alinhamos objetivos. Toda boa estratégia começa com as perguntas certas.' },
-  { id: '02', icon: Layers, tag: 'IMPLEMENTAÇÃO', title: 'Depois, conectamos.', desc: 'Tráfego, CRM, automações e conteúdo passam a trabalhar juntos. Cada entrega tem uma função no crescimento da sua marca.' },
-  { id: '03', icon: TrendingUp, tag: 'EVOLUÇÃO', title: 'E seguimos evoluindo.', desc: 'Analisamos os resultados, testamos novas ideias e aprimoramos a estratégia. Crescimento é um trabalho contínuo.' },
+  { id: '01', icon: Search, tag: 'DIAGNÓSTICO GRATUITO', title: 'Entendemos seu negócio.', desc: 'Uma conversa sem custo para conhecer sua oferta, seu público e como sua equipe atende hoje. Você sai com as prioridades claras, contratando ou não.' },
+  { id: '02', icon: Layers, tag: 'PROPOSTA E IMPLANTAÇÃO', title: 'Colocamos tudo no ar.', desc: 'Você recebe uma proposta com escopo, entregas e investimento definidos. Aprovada, implantamos o que foi combinado e conectamos cada peça ao seu atendimento.' },
+  { id: '03', icon: TrendingUp, tag: 'ACOMPANHAMENTO', title: 'E seguimos ajustando.', desc: 'Acompanhamos os números, testamos novas ideias e ajustamos o que for preciso. Crescimento é um trabalho contínuo.' },
 ];
 
 export default function Protocol() {
@@ -40,10 +40,10 @@ export default function Protocol() {
     <section ref={sectionRef} className="process-section" id="estratégia">
       <div className="section-heading">
         <div>
-          <p className="eyebrow">03 / COMO ACONTECE</p>
-          <h2>Uma direção clara.<br /><span>Cada passo conectado.</span></h2>
+          <p className="eyebrow">03 / COMO FUNCIONA</p>
+          <h2>Três passos.<br /><span>Nenhuma surpresa.</span></h2>
         </div>
-        <p>Da primeira conversa à próxima conquista, você acompanha o caminho.</p>
+        <p>Da primeira conversa ao acompanhamento dos resultados, você sabe o que está sendo feito e por quê.</p>
       </div>
       <div className="process-grid">
         {steps.map(({ id, icon: Icon, tag, title, desc }) => (

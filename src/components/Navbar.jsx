@@ -3,11 +3,11 @@ import { Menu, X, ArrowUpRight } from 'lucide-react';
 import ShineButton from './ui/ShineButton';
 
 const links = [
-  ['Soluções', '/#soluções', 'soluções'],
-  ['Operação', '/#operação', 'operação'],
-  ['Método', '/#estratégia', 'estratégia'],
+  ['Serviços', '/#soluções', 'soluções'],
+  ['CRM e automação', '/#operação', 'operação'],
+  ['Como funciona', '/#estratégia', 'estratégia'],
   ['Portfólio', '/portfolio', 'portfólio'],
-  ['Nosso diferencial', '/#crm-integrado', 'crm-integrado'],
+  ['Dúvidas', '/#duvidas', 'duvidas'],
 ];
 
 export default function Navbar({ openModal }) {
@@ -28,7 +28,7 @@ export default function Navbar({ openModal }) {
   }, []);
 
   useEffect(() => {
-    const ids = ['soluções', 'crm-integrado', 'operação', 'estratégia', 'portfólio'];
+    const ids = ['soluções', 'operação', 'estratégia', 'portfólio', 'duvidas'];
     const elements = ids.map(id => document.getElementById(id)).filter(Boolean);
     if (!elements.length || typeof IntersectionObserver === 'undefined') return;
 
@@ -67,7 +67,7 @@ export default function Navbar({ openModal }) {
           ))}
         </div>
         <ShineButton className="nav-contact" onClick={openModal}>
-          Vamos conversar <ArrowUpRight size={17} />
+          Diagnóstico gratuito <ArrowUpRight size={17} />
         </ShineButton>
         <button
           className="menu-toggle"
@@ -103,7 +103,7 @@ export default function Navbar({ openModal }) {
               tabIndex={isOpen ? 0 : -1}
               onClick={() => { setIsOpen(false); openModal(); }}
             >
-              Agendar consultoria <ArrowUpRight size={18} />
+              Agendar diagnóstico gratuito <ArrowUpRight size={18} />
             </ShineButton>
           </div>
         </div>
