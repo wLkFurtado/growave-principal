@@ -41,9 +41,9 @@ export default function FlowSection({ openModal }) {
   return (
     <section ref={sectionRef} id="operação" className="flow-section">
       <div className="flow-section-copy">
-        <p className="eyebrow">02 / A OPERAÇÃO POR DENTRO</p>
+        <p className="eyebrow">02 / CRM E AUTOMAÇÃO NA PRÁTICA</p>
         <h2>Do primeiro contato<br /><span>ao cliente fechado.</span></h2>
-        <p className="flow-section-lead">Qualquer caminho que o cliente tome passa pelo mesmo CRM. É isso que faz anúncio, site, WhatsApp e agenda funcionarem como uma coisa só, e não como cinco ferramentas separadas.</p>
+        <p className="flow-section-lead">Qualquer caminho que o cliente tome passa pelo mesmo CRM. É isso que faz anúncio, site, WhatsApp e agenda funcionarem como uma coisa só, e não como ferramentas soltas.</p>
         <dl className="flow-gains">
           {ganhos.map(([titulo, texto]) => (
             <div key={titulo} className="flow-gain-item">
@@ -52,7 +52,7 @@ export default function FlowSection({ openModal }) {
             </div>
           ))}
         </dl>
-        <button className="action-text" onClick={openModal}>Quero esse fluxo rodando <ArrowUpRight size={18} aria-hidden="true" /></button>
+        <button className="action-text" onClick={openModal}>Quero esse fluxo na minha empresa <ArrowUpRight size={18} aria-hidden="true" /></button>
       </div>
 
       <SpotlightCard className="flow-section-diagram">

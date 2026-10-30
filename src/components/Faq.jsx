@@ -2,7 +2,7 @@ import { commonFaq } from '../content/sitePages';
 
 export default function Faq({ items = commonFaq }) {
   return (
-    <section className="faq-section" aria-labelledby="faq-heading">
+    <section id="duvidas" className="faq-section" aria-labelledby="faq-heading">
       <p className="eyebrow">PERGUNTAS FREQUENTES</p>
       <h2 id="faq-heading">Vamos esclarecer?</h2>
       <div className="faq-list">

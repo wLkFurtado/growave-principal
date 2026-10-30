@@ -33,7 +33,7 @@ export default function PortfolioSection() {
           <p className="eyebrow">04 / PORTFÓLIO AUDIOVISUAL</p>
           <h2>Histórias que merecem<br /><span>ser vistas.</span></h2>
         </div>
-        <p>Um olhar sobre o que criamos para marcas que precisam parar o scroll. Passe o mouse para pré-visualizar ou selecione para assistir.</p>
+        <p>Alguns dos vídeos que produzimos para marcas que precisavam parar o scroll. Selecione um para assistir.</p>
       </div>
 
       {loading ? (
