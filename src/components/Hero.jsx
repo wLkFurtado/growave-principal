@@ -35,7 +35,7 @@ export default function Hero({ openModal }) {
           <ShineButton className="action-primary" onClick={openModal}>Agendar diagnóstico gratuito <ArrowUpRight size={20} /></ShineButton>
           <Link className="action-text" to="/portfolio"><span className="action-play-badge"><Play size={14} /></span> Conheça nosso trabalho</Link>
         </div>
-        <div className="hero-note hero-enter"><span>+40 empresas atendidas</span><span>6 anos de experiência</span><span>Sem compromisso</span></div>
+        <div className="hero-note hero-enter"><span>+40 empresas atendidas</span><span>6 anos de experiência</span><span>Estratégia sob medida</span></div>
       </div>
       <HeroWaveStage />
       <div className="hero-bottom">
