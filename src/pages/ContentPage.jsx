@@ -28,7 +28,7 @@ export default function ContentPage({ page }) {
             <p className="policy-date hero-enter">Última atualização: {page.updatedAt}</p>
           ) : (
             <a className="action-primary shine-button hero-enter" href="/#contato">
-              <span className="shine-button-content">Agendar consultoria gratuita</span>
+              <span className="shine-button-content">Agendar diagnóstico gratuito</span>
             </a>
           )}
         </section>
@@ -43,7 +43,7 @@ export default function ContentPage({ page }) {
         </div>
         {!page.legal && (
           <section className="content-related">
-            <h2>Conheça as soluções conectadas</h2>
+            <h2>Conheça nossos serviços</h2>
             <div>
               {services.filter(service => service.path !== page.path).map(service => (
                 <a href={service.path} key={service.path}>

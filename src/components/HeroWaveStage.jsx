@@ -156,12 +156,21 @@ export default function HeroWaveStage() {
       <canvas ref={canvasRef} className="hero-wave-canvas" />
       <span className="hero-art-aura" />
 
+      {/* Moldura Viewfinder Técnica */}
+      <div className="hero-vf-hud" aria-hidden="true">
+        <span className="hero-vf-corner vf-tl" />
+        <span className="hero-vf-corner vf-tr" />
+        <span className="hero-vf-corner vf-bl" />
+        <span className="hero-vf-corner vf-br" />
+        <span className="hero-vf-code">GW // PALCO INTERATIVO · 60 FPS</span>
+      </div>
+
       {/* Camada 2: Logo 3D com feixes de energia vetoriais sincronizados */}
       <div className="brand-depth">
         <div className="brand-composition">
           <div className="brand-symbol-stage">
             <div className="brand-symbol-crop">
-              <img src="/assets/growave-brand-hero.jpg" alt="" width="1600" height="1600" fetchPriority="high" />
+              <img src="/assets/growave-brand-transparent.png" alt="" width="1600" height="1600" fetchPriority="high" />
             </div>
 
             {/* Feixes de luz e radar calibrados exatamente sobre a geometria da logo */}
@@ -226,7 +235,7 @@ export default function HeroWaveStage() {
           </div>
 
           <div className="brand-wordmark-crop">
-            <img src="/assets/growave-brand-hero.jpg" alt="" width="1600" height="1600" />
+            <img src="/assets/growave-brand-transparent.png" alt="" width="1600" height="1600" />
           </div>
           <p className="brand-signature">ESTRATÉGIA EM MOVIMENTO.</p>
         </div>

@@ -50,27 +50,27 @@ export default function Stats() {
     <section ref={ref} className="stats-section" aria-label="Indicadores da Growave">
       <div className="stats-grid">
         <div className="stat-item stat-intro">
-          <p className="eyebrow">TRAÇÃO REAL</p>
+          <p className="eyebrow">NOSSA TRAJETÓRIA</p>
           <div className="stat-heading">
-            Números<br /><span>Que Falam.</span>
+            Números<br /><span>que falam.</span>
           </div>
           <p className="stat-lead">
-            Resultados que refletem o compromisso e o avanço contínuo da Growave em operações reais.
+            Empresas de Cabo Frio e de todo o Brasil já confiaram na Growave para atrair clientes e organizar o atendimento.
           </p>
         </div>
         <AnimatedStat
           tag="ALCANCE NACIONAL"
           num={40}
           suffix="+"
-          title="Empresas Escaladas"
-          sub="Negócios e marcas transformadas com tráfego, audiovisual e CRM em todo o Brasil."
+          title="Empresas atendidas"
+          sub="Negócios que já trabalharam com nosso tráfego pago, audiovisual e CRM."
         />
         <AnimatedStat
           tag="MATURIDADE DE CAMPO"
           num={6}
           suffix=" Anos"
-          title="De Experiência"
-          sub="Tração real, engenharia de vendas e marketing orientado a oportunidades comerciais."
+          title="De experiência"
+          sub="Vivência com anúncios, conteúdo e processos comerciais, aplicada à rotina de cada cliente."
         />
       </div>
     </section>

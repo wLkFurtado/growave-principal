@@ -4,7 +4,7 @@ export function pageMetadata(page) {
 }
 export const homeMetadata = {
   title: 'Growave | Agência de Marketing Digital, Tráfego Pago e Automação',
-  description: 'Agência de marketing em Cabo Frio, RJ: tráfego pago, social media, landing pages, CRM, automação, audiovisual e agendamento inteligente. Atendimento em todo o Brasil.',
+  description: 'Agência de marketing digital em Cabo Frio, RJ: tráfego pago, social media, audiovisual, sites, Google Meu Negócio e CRM. Atendimento em todo o Brasil.',
   canonical: `${siteUrl}/`, schemas: [organization],
 };
 export function serializeSchema(value) { return JSON.stringify(value).replace(/</g, '\\u003c'); }

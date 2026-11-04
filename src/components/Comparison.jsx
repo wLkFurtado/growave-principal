@@ -7,18 +7,18 @@ import SpotlightCard from './ui/SpotlightCard';
 gsap.registerPlugin(ScrollTrigger);
 
 const problems = [
-  'Vendas dependentes de esforço humano e horário comercial',
-  'Atendimento com gargalos (demora a responder, almoço, folga)',
-  'Falta de padronização nas abordagens comerciais',
-  'Esquecimento de follow-ups e leads caindo no esquecimento',
-  'Nenhuma visibilidade sobre o ROI real de cada campanha',
+  'Contato que chega à noite ou no fim de semana fica sem resposta',
+  'WhatsApp lotado: o cliente cansa de esperar e procura outro',
+  'Cada pessoa da equipe atende de um jeito diferente',
+  'Orçamento enviado sem follow-up, e a venda esfria',
+  'Investimento em anúncio sem saber o que ele trouxe',
 ];
 const solutions = [
-  'Máquina de captação e atendimento 24h por dia',
-  'Automações que vendem e nutrem enquanto você descansa',
-  'Script IA validado e sempre 100% consistente',
-  'CRM próprio: zero esquecimento, histórico completo de cada lead',
-  'Dashboard de resultados com rastreamento ponta-a-ponta',
+  'Resposta automática em segundos, a qualquer hora',
+  'Todas as conversas num só lugar, com histórico',
+  'Roteiro de atendimento padronizado, com apoio de IA',
+  'Follow-up automático: nenhum orçamento esquecido',
+  'Relatórios que mostram o que cada campanha trouxe',
 ];
 
 export default function Comparison() {
@@ -53,16 +53,16 @@ export default function Comparison() {
     <section id="método" ref={ref} className="comparison-section">
       <div className="section-heading">
         <div>
-          <p className="eyebrow">CONTRASTE OPERACIONAL</p>
-          <h2>O Problema <span>vs. A Solução.</span></h2>
+          <p className="eyebrow">ONDE AS VENDAS SE PERDEM</p>
+          <h2>Atrair é só metade.<br /><span>A outra é não perder a venda.</span></h2>
         </div>
-        <p>Pare de perder vendas e desgastar sua equipe. Automatize os processos mecânicos e ganhe escala real.</p>
+        <p>Se algum desses problemas acontece na sua empresa, você está perdendo vendas que já pagou para conseguir.</p>
       </div>
 
       <div className="comparison-grid">
         <article className="compare-col compare-manual">
-          <span className="compare-badge compare-badge-manual">A Maioria das Empresas</span>
-          <h3>Processos Manuais</h3>
+          <span className="compare-badge compare-badge-manual">Sem processo</span>
+          <h3>Atendimento no improviso</h3>
           <ul className="compare-list">
             {problems.map((p, i) => (
               <li
@@ -81,8 +81,8 @@ export default function Comparison() {
         </article>
 
         <SpotlightCard className="compare-col compare-growave">
-          <span className="compare-badge compare-badge-growave">O Padrão Growave</span>
-          <h3>Sistema Full-Stack</h3>
+          <span className="compare-badge compare-badge-growave">Com a Growave</span>
+          <h3>Operação conectada</h3>
           <ul className="compare-list">
             {solutions.map((s, i) => (
               <li
