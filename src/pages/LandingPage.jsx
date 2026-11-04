@@ -4,8 +4,10 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import Navbar from '../components/Navbar';
+import GrowaveIntro from '../components/GrowaveIntro';
 import Hero from '../components/Hero';
 import Stats from '../components/Stats';
+import ManifestoScroll from '../components/ManifestoScroll';
 import Features from '../components/Features';
 import FlowSection from '../components/FlowSection';
 import Comparison from '../components/Comparison';
@@ -50,10 +52,12 @@ export default function LandingPage() {
 
   return (
     <>
+      <GrowaveIntro />
       <Navbar openModal={() => setIsModalOpen(true)} />
       <main id="conteudo">
       <Hero openModal={() => setIsModalOpen(true)} />
       <Stats />
+      <ManifestoScroll />
       <Features openModal={() => setIsModalOpen(true)} />
       <FlowSection openModal={() => setIsModalOpen(true)} />
       <Comparison />

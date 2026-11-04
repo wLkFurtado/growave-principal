@@ -108,6 +108,14 @@ export default function PortfolioVideoCard({ video, onOpen }) {
 
       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent opacity-80 group-hover:opacity-45 transition-opacity duration-300 pointer-events-none" />
 
+      {/* Cantoneiras Viewfinder estilo monitor de cinema */}
+      <div className="portfolio-vf-frame" aria-hidden="true">
+        <span className="vf-c vf-tl" />
+        <span className="vf-c vf-tr" />
+        <span className="vf-c vf-bl" />
+        <span className="vf-c vf-br" />
+      </div>
+
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <div
           className={`w-14 h-14 rounded-full bg-black/55 backdrop-blur-md border border-white/20 flex items-center justify-center transition-all duration-300 group-hover:bg-[#4aff5a] group-hover:border-[#4aff5a] group-hover:scale-110 group-hover:shadow-[0_0_28px_rgba(74,255,90,0.45)] ${
@@ -116,6 +124,13 @@ export default function PortfolioVideoCard({ video, onOpen }) {
         >
           <Play size={22} className="text-white group-hover:text-[#071007] fill-current ml-0.5 transition-colors" />
         </div>
+      </div>
+
+      <div className="absolute top-3 left-3 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-black/65 backdrop-blur-md border border-white/15 text-white/90 font-mono text-[9px] tracking-widest uppercase">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#4aff5a]" />
+          REC · 24FPS
+        </span>
       </div>
 
       {previewReady && hovering && (
@@ -137,4 +152,3 @@ export default function PortfolioVideoCard({ video, onOpen }) {
     </button>
   );
 }
-
